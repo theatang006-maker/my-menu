@@ -988,7 +988,7 @@
   </div>
 </div>
 
-<div id="comboSnapshot" style="position:fixed;left:-9999px;top:0;width:360px;background:#fff9f4;border-radius:24px;overflow:hidden;font-family:'Noto Sans SC',sans-serif;">
+<div id="comboSnapshot" style="position:fixed;left:-9999px;top:0;width:360px;background:#fff9f4;overflow:hidden;font-family:'Noto Sans SC',sans-serif;">
   <div style="background:linear-gradient(135deg,#942f14 0%,#6b1e0a 100%);padding:28px 24px 22px;text-align:center;">
     <div style="font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:3px;margin-bottom:4px;">今日推荐搭配</div>
     <div id="snapshotDate" style="font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:1px;"></div>
@@ -1024,7 +1024,7 @@
     <span>生成中...</span>
   </div>
   <div id="imgPreviewContent" style="display:none;flex-direction:column;align-items:center;">
-    <div class="img-preview-hint">👆 长按图片保存到相册</div>
+    <div class="img-preview-hint">👆 长按转发给番茄</div>
     <img class="img-preview-img" id="imgPreviewImg" src="" alt="今日菜单" />
     <button class="img-preview-close" id="imgPreviewClose">×</button>
   </div>
@@ -1342,59 +1342,87 @@ document.getElementById('closeBtn').addEventListener('click', () => {
 });
 
 function showComboSnapshot() {
-  // 收集当前推荐的菜品
   const cards = document.querySelectorAll('#comboCards .combo-card');
   if (!cards.length) return;
 
-  // 填充截图容器
   const now = new Date();
   document.getElementById('snapshotDate').textContent =
     `${now.getMonth()+1}月${now.getDate()}日 · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
 
-  document.getElementById('snapshotCards').innerHTML = Array.from(cards).map(card => {
-    const label = card.querySelector('.combo-label')?.textContent || '';
-    const name  = card.querySelector('.combo-name')?.textContent || '';
-    const cat   = card.querySelector('.combo-cat')?.textContent || '';
-    const info  = dishImgMap[name];
-    const imgContent = (info && info.type === 'img')
-      ? `<img src="${info.src}" alt="${name}" style="width:56px;height:56px;object-fit:cover;border-radius:10px;flex-shrink:0;">`
-      : `<div style="width:56px;height:56px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:32px;background:#f5ece0;">${info?.emoji || '🍽️'}</div>`;
-    return `
-      <div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 2px 10px rgba(61,43,31,0.1);">
-        ${imgContent}
-        <div>
-          <div style="font-size:10px;color:#c4a882;letter-spacing:1px;font-weight:500;margin-bottom:3px;">${label}</div>
-          <div style="font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:#3d2b1f;letter-spacing:0.5px;">${name}</div>
-          <div style="font-size:11px;color:#7a5c45;margin-top:2px;">${cat}</div>
-        </div>
-      </div>`;
-  }).join('');
-
   // 显示加载弹窗
-  const overlay   = document.getElementById('imgPreviewOverlay');
-  const loading   = document.getElementById('imgPreviewLoading');
+  const overlay      = document.getElementById('imgPreviewOverlay');
+  const loading      = document.getElementById('imgPreviewLoading');
   const previewContent = document.getElementById('imgPreviewContent');
-  const previewImg = document.getElementById('imgPreviewImg');
+  const previewImg   = document.getElementById('imgPreviewImg');
   loading.style.display = 'flex';
   previewContent.style.display = 'none';
   overlay.classList.add('open');
 
-  const snap = document.getElementById('comboSnapshot');
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      html2canvas(snap, {
-        backgroundColor: '#fff9f4',
-        scale: 2,
-        useCORS: true,
-        logging: false
-      }).then(canvas => {
-        previewImg.src = canvas.toDataURL('image/jpeg', 0.95);
-        loading.style.display = 'none';
-        previewContent.style.display = 'flex';
-      }).catch(() => {
-        overlay.classList.remove('open');
-      });
-    }, 100);
+  // 收集需要预加载的图片
+  const items = Array.from(cards).map(card => {
+    const label = card.querySelector('.combo-label')?.textContent || '';
+    const name  = card.querySelector('.combo-name')?.textContent || '';
+    const cat   = card.querySelector('.combo-cat')?.textContent || '';
+    const info  = dishImgMap[name];
+    return { label, name, cat, info };
+  });
+
+  // 把所有图片转成 base64 再渲染，绕过跨域
+  function toBase64(url) {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth; c.height = img.naturalHeight;
+        c.getContext('2d').drawImage(img, 0, 0);
+        try { resolve(c.toDataURL('image/jpeg', 0.9)); }
+        catch(e) { resolve(null); }
+      };
+      img.onerror = () => resolve(null);
+      img.src = url + '?t=' + Date.now();
+    });
+  }
+
+  const imgPromises = items.map(item =>
+    (item.info && item.info.type === 'img') ? toBase64(item.info.src) : Promise.resolve(null)
+  );
+
+  Promise.all(imgPromises).then(b64List => {
+    document.getElementById('snapshotCards').innerHTML = items.map((item, i) => {
+      const b64 = b64List[i];
+      const imgContent = b64
+        ? `<img src="${b64}" alt="${item.name}" style="width:56px;height:56px;object-fit:cover;border-radius:10px;flex-shrink:0;">`
+        : `<div style="width:56px;height:56px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:32px;background:#f5ece0;">${item.info?.emoji || '🍽️'}</div>`;
+      return `
+        <div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 2px 10px rgba(61,43,31,0.1);">
+          ${imgContent}
+          <div>
+            <div style="font-size:10px;color:#c4a882;letter-spacing:1px;font-weight:500;margin-bottom:3px;">${item.label}</div>
+            <div style="font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;color:#3d2b1f;letter-spacing:0.5px;">${item.name}</div>
+            <div style="font-size:11px;color:#7a5c45;margin-top:2px;">${item.cat}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    const snap = document.getElementById('comboSnapshot');
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        html2canvas(snap, {
+          backgroundColor: '#fff9f4',
+          scale: 2,
+          useCORS: false,
+          allowTaint: true,
+          logging: false
+        }).then(canvas => {
+          previewImg.src = canvas.toDataURL('image/jpeg', 0.95);
+          loading.style.display = 'none';
+          previewContent.style.display = 'flex';
+        }).catch(() => {
+          overlay.classList.remove('open');
+        });
+      }, 100);
+    });
   });
 }
 document.getElementById('modal').addEventListener('click', e => {
