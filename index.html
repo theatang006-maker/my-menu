@@ -1138,7 +1138,7 @@
     <div class="img-preview-card-body" id="imgPreviewBody"></div>
   </div>
   <div class="img-preview-btns">
-    <button class="img-preview-save-btn" id="imgPreviewSaveBtn">📸 保存图片</button>
+    <button class="img-preview-save-btn" id="imgPreviewSaveBtn">📤 转发菜单</button>
     <button class="img-preview-close" id="imgPreviewClose">×</button>
   </div>
 </div>
@@ -1482,7 +1482,7 @@ function showComboSnapshot() {
   if (!cards.length) return;
 
   const now = new Date();
-  const dateStr = `${now.getMonth()+1}月${now.getDate()}日 · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
 
   const items = Array.from(cards).map(card => {
     const label = card.querySelector('.combo-label')?.textContent || '';
@@ -1494,6 +1494,19 @@ function showComboSnapshot() {
 
   document.getElementById('imgPreviewTitle').textContent = '今日推荐搭配';
   document.getElementById('imgPreviewDate').textContent = dateStr;
+  document.querySelector('.img-preview-hint').textContent = '👆 长按转发给番茄';
+  document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
+  document.getElementById('imgPreviewSaveBtn').textContent = '📤 转发菜单';
+  document.getElementById('imgPreviewSaveBtn').disabled = false;
+  // 恢复卡片结构（截图后可能被替换为img）
+  if (!document.getElementById('imgPreviewBody')) {
+    document.getElementById('imgPreviewCard').innerHTML = `
+      <div class="img-preview-card-header">
+        <div class="img-preview-card-title" id="imgPreviewTitle">今日推荐搭配</div>
+        <div class="img-preview-card-date" id="imgPreviewDate">${dateStr}</div>
+      </div>
+      <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
+  }
   document.getElementById('imgPreviewBody').innerHTML = `
     <div class="img-preview-combo-list">
       ${items.map(item => {
@@ -1670,7 +1683,7 @@ function getCatClass(tag) {
 
 function buildMenuCardDOM() {
   const now = new Date();
-  const dateStr = `${now.getMonth()+1}月${now.getDate()}日 · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
   document.getElementById('menuCardDate').textContent = dateStr;
   document.getElementById('menuCardCount').textContent = `🍽️ 共 ${selectedDishes.size} 道菜`;
   document.getElementById('menuCardGrid').innerHTML = [...selectedDishes.entries()].map(([name, info]) => {
@@ -1687,11 +1700,24 @@ function showMenuCard() {
   if (selectedDishes.size === 0) return;
 
   const now = new Date();
-  const dateStr = `${now.getMonth()+1}月${now.getDate()}日 · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
   const entries = [...selectedDishes.entries()];
 
   document.getElementById('imgPreviewTitle').textContent = '今日菜单';
   document.getElementById('imgPreviewDate').textContent = dateStr;
+  document.querySelector('.img-preview-hint').textContent = '👆 长按转发给番茄';
+  document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
+  document.getElementById('imgPreviewSaveBtn').textContent = '📤 转发菜单';
+  document.getElementById('imgPreviewSaveBtn').disabled = false;
+  // 恢复卡片结构（截图后可能被替换为img）
+  if (!document.getElementById('imgPreviewBody')) {
+    document.getElementById('imgPreviewCard').innerHTML = `
+      <div class="img-preview-card-header">
+        <div class="img-preview-card-title" id="imgPreviewTitle">今日菜单</div>
+        <div class="img-preview-card-date" id="imgPreviewDate">${dateStr}</div>
+      </div>
+      <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
+  }
   document.getElementById('imgPreviewBody').innerHTML = `
     <div style="text-align:center;margin-bottom:14px;">
       <span style="display:inline-block;background:#fff5f0;border:1px solid #f0c8b8;color:#942f14;font-size:12px;padding:4px 14px;border-radius:20px;font-weight:500;letter-spacing:0.5px;">🍽️ 共 ${selectedDishes.size} 道菜</span>
@@ -1726,6 +1752,7 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
   const btn = document.getElementById('imgPreviewSaveBtn');
   btn.textContent = '生成中...';
   btn.disabled = true;
+
   const card = document.getElementById('imgPreviewCard');
   html2canvas(card, {
     scale: 3,
@@ -1734,14 +1761,14 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
     backgroundColor: '#fff9f4',
     logging: false
   }).then(canvas => {
-    const link = document.createElement('a');
-    link.download = '番茄私厨菜单.jpg';
-    link.href = canvas.toDataURL('image/jpeg', 0.95);
-    link.click();
-    btn.textContent = '📸 保存图片';
-    btn.disabled = false;
+    const imgUrl = canvas.toDataURL('image/jpeg', 0.95);
+    // 用截图替换卡片，用户长按即可在微信发送给朋友
+    document.getElementById('imgPreviewCard').innerHTML =
+      `<img src="${imgUrl}" style="width:100%;display:block;border-radius:20px;" alt="番茄私厨菜单">`;
+    document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄';
+    btn.style.display = 'none';
   }).catch(() => {
-    btn.textContent = '📸 保存图片';
+    btn.textContent = '📤 转发菜单';
     btn.disabled = false;
   });
 });
