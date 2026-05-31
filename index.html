@@ -878,6 +878,29 @@
     align-items: center;
     justify-content: center;
   }
+  .img-preview-save-btn {
+    margin-top: 14px;
+    padding: 10px 28px;
+    background: #ecad40;
+    border: none;
+    border-radius: 24px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(236,173,64,0.4);
+  }
+  .img-preview-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 4px;
+  }
   .img-preview-loading {
     color: rgba(255,255,255,0.8);
     font-size: 14px;
@@ -1114,7 +1137,10 @@
     </div>
     <div class="img-preview-card-body" id="imgPreviewBody"></div>
   </div>
-  <button class="img-preview-close" id="imgPreviewClose">×</button>
+  <div class="img-preview-btns">
+    <button class="img-preview-save-btn" id="imgPreviewSaveBtn">📸 保存图片</button>
+    <button class="img-preview-close" id="imgPreviewClose">×</button>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1130,7 +1156,7 @@ const categories = {
   hotpot:  { label: '火锅', icon: '🔥', dishes: ['清汤锅底','花胶鸡锅底','牛油锅底','猪肚鸡锅底'] },
   night:   { label: '宵夜', icon: '🌙', dishes: ['手抓饼','花生汤圆','韭菜猪肉煎饺','海鲜面','辣鸡面','小龙虾拌面'] }
 };
-const mainDishCats = ['pork','chicken','beef','lamb','seafood','veggie','hotpot','night'];
+const mainDishCats = ['pork','chicken','beef','lamb','seafood','veggie','hotpot'];
 // 可用于"随机加菜"的分类（排除炖汤、火锅、宵夜）
 const extraDishCats = ['pork','chicken','beef','lamb','seafood','veggie'];
 const comboEmojis = { pork:'🥩',chicken:'🍗',beef:'🥩',lamb:'🍖',seafood:'🦐',veggie:'🥦',hotpot:'🔥',night:'🌙',soup:'🍲' };
@@ -1694,6 +1720,30 @@ document.getElementById('imgPreviewOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('imgPreviewOverlay')) {
     document.getElementById('imgPreviewOverlay').classList.remove('open');
   }
+});
+
+document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
+  const btn = document.getElementById('imgPreviewSaveBtn');
+  btn.textContent = '生成中...';
+  btn.disabled = true;
+  const card = document.getElementById('imgPreviewCard');
+  html2canvas(card, {
+    scale: 3,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#fff9f4',
+    logging: false
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = '番茄私厨菜单.jpg';
+    link.href = canvas.toDataURL('image/jpeg', 0.95);
+    link.click();
+    btn.textContent = '📸 保存图片';
+    btn.disabled = false;
+  }).catch(() => {
+    btn.textContent = '📸 保存图片';
+    btn.disabled = false;
+  });
 });
 
 
