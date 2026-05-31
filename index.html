@@ -1129,7 +1129,7 @@
 </div>
 
 <div class="img-preview-overlay" id="imgPreviewOverlay">
-  <div class="img-preview-hint">👆 生成菜单后长按转发给番茄吧~</div>
+  <div class="img-preview-hint"></div>
   <div class="img-preview-card" id="imgPreviewCard">
     <div class="img-preview-card-header">
       <div class="img-preview-card-title" id="imgPreviewTitle">今日菜单</div>
@@ -1499,7 +1499,7 @@ function showComboSnapshot() {
 
   document.getElementById('imgPreviewTitle').textContent = '今日推荐搭配';
   document.getElementById('imgPreviewDate').textContent = dateStr;
-  document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
+  document.querySelector('.img-preview-hint').textContent = '';
   document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
   document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
   document.getElementById('imgPreviewSaveBtn').disabled = false;
@@ -1702,7 +1702,7 @@ function showMenuCard() {
 
   document.getElementById('imgPreviewTitle').textContent = '今日菜单';
   document.getElementById('imgPreviewDate').textContent = dateStr;
-  document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
+  document.querySelector('.img-preview-hint').textContent = '';
   document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
   document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
   document.getElementById('imgPreviewSaveBtn').disabled = false;
@@ -1736,7 +1736,7 @@ document.getElementById('imgPreviewClose').addEventListener('click', () => {
       <div class="img-preview-card-date" id="imgPreviewDate"></div>
     </div>
     <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
-  document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
+  document.querySelector('.img-preview-hint').textContent = '';
   document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
   document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
   document.getElementById('imgPreviewSaveBtn').disabled = false;
@@ -1750,7 +1750,7 @@ document.getElementById('imgPreviewOverlay').addEventListener('click', e => {
         <div class="img-preview-card-date" id="imgPreviewDate"></div>
       </div>
       <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
-    document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
+    document.querySelector('.img-preview-hint').textContent = '';
     document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
     document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
     document.getElementById('imgPreviewSaveBtn').disabled = false;
@@ -1774,7 +1774,7 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
     // 用截图替换卡片，用户长按即可在微信发送给朋友
     document.getElementById('imgPreviewCard').innerHTML =
       `<img src="${imgUrl}" style="width:100%;display:block;border-radius:20px;" alt="番茄私厨菜单">`;
-    document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄';
+    document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄吧~';
     btn.style.display = 'none';
   }).catch(() => {
     btn.textContent = '生成菜单';
