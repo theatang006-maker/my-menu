@@ -54,7 +54,9 @@
   }
   .header-banner-img {
     width: 100%;
-    height: auto;
+    height: calc(100vw / 3 * 1.333);
+    max-height: 280px;
+    object-fit: cover;
     display: block;
   }
   .header-label { display: none; }
@@ -483,15 +485,15 @@
 
   /* ── 点菜选中效果 ── */
   .dish-card.selected {
-    outline: 3px solid var(--accent);
-    box-shadow: 0 0 0 6px rgba(192,57,43,0.15), 0 2px 14px var(--shadow);
+    outline: 3px solid #ecad40;
+    box-shadow: 0 0 0 6px rgba(236,173,64,0.15), 0 2px 14px var(--shadow);
     transform: scale(1.03);
   }
   .dish-card .selected-badge {
     display: none;
     position: absolute;
     top: 8px; right: 8px;
-    background: var(--accent);
+    background: #ecad40;
     color: #fff;
     font-size: 13px;
     width: 24px; height: 24px;
