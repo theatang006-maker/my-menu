@@ -557,14 +557,40 @@
   }
   .order-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid #f5ece0;
     animation: fadeUp 0.2s ease;
   }
   .order-item:last-child { border-bottom: none; }
-  .order-item-emoji { font-size: 26px; flex-shrink: 0; }
+  .order-sub-list { padding: 4px 0 6px 50px; }
+  .order-sub-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 13px;
+    color: var(--brown-mid);
+    border-bottom: 1px dashed #f5ece0;
+  }
+  .order-sub-item:last-child { border-bottom: none; }
+  .order-sub-name { flex: 1; }
+  .order-sub-del {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: #f5ece0;
+    color: var(--accent);
+    font-size: 11px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .order-sub-del:hover { background: #fde0d8; }
+  .order-item-emoji { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+
   .order-item-name {
     font-family: 'Noto Serif SC', serif;
     font-size: 15px;
@@ -587,6 +613,7 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     transition: background 0.15s;
+    margin-top: 2px;
   }
   .order-item-del:hover { background: #fde0d8; }
 
@@ -614,6 +641,68 @@
   }
   .order-submit-btn:active { transform: scale(0.98); }
 
+
+  /* ── 火锅配菜 ── */
+  .hotpot-sides-btn {
+    display: block;
+    width: calc(100% - 32px);
+    margin: 12px 16px 4px;
+    padding: 12px;
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    border: 1.5px solid #ecad40;
+    border-radius: 12px;
+    color: #942f14;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.2s;
+  }
+  .hotpot-sides-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+  }
+  .hotpot-sides-panel {
+    display: none;
+    margin: 0 16px 16px;
+    background: #fff9f4;
+    border: 1.5px solid #f0c8b8;
+    border-radius: 14px;
+    padding: 14px;
+  }
+  .hotpot-sides-panel.open { display: block; }
+  .hotpot-sides-title {
+    font-size: 12px;
+    color: var(--brown-mid);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .hotpot-sides-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .hotpot-side-item {
+    background: #fff;
+    border: 1.5px solid #f0e8de;
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--brown-deep);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .hotpot-side-item.selected {
+    background: #ecad40;
+    border-color: #ecad40;
+    color: #fff;
+  }
 
   /* ── 菜单汇总卡片弹窗 ── */
   .menu-card-overlay {
@@ -934,10 +1023,10 @@
 
 <div class="tabs-wrap">
   <div class="tabs" id="tabs">
-    <button class="tab active" data-cat="pork"><span class="tab-icon">🥩</span><span class="tab-name">猪肉</span></button>
+    <button class="tab active" data-cat="pork"><span class="tab-icon">🐖</span><span class="tab-name">猪肉</span></button>
     <button class="tab" data-cat="chicken"><span class="tab-icon">🍗</span><span class="tab-name">鸡肉</span></button>
-    <button class="tab" data-cat="beef"><span class="tab-icon">🥩</span><span class="tab-name">牛肉</span></button>
-    <button class="tab" data-cat="lamb"><span class="tab-icon">🫀</span><span class="tab-name">羊肉</span></button>
+    <button class="tab" data-cat="beef"><span class="tab-icon">🐂</span><span class="tab-name">牛肉</span></button>
+    <button class="tab" data-cat="lamb"><span class="tab-icon">🐏</span><span class="tab-name">羊肉</span></button>
     <button class="tab" data-cat="seafood"><span class="tab-icon">🦐</span><span class="tab-name">海鲜</span></button>
     <button class="tab" data-cat="veggie"><span class="tab-icon">🥦</span><span class="tab-name">蔬菜</span></button>
     <button class="tab" data-cat="soup"><span class="tab-icon">🍲</span><span class="tab-name">炖汤</span></button>
@@ -948,7 +1037,7 @@
 
 <main id="main">
   <section class="section active" id="sec-pork">
-    <div class="section-header"><span class="s-icon">🥩</span><h2>猪肉</h2><span class="s-count">2 道菜</span></div>
+    <div class="section-header"><span class="s-icon">🐖</span><h2>猪肉</h2><span class="s-count">2 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">青椒肉丝</div><span class="dish-tag tag-pork">猪肉·青椒</span></div></div>
@@ -967,7 +1056,7 @@
   </section>
 
   <section class="section" id="sec-beef">
-    <div class="section-header"><span class="s-icon">🥩</span><h2>牛肉</h2><span class="s-count">9 道菜</span></div>
+    <div class="section-header"><span class="s-icon">🐂</span><h2>牛肉</h2><span class="s-count">9 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">小炒牛肉</div><span class="dish-tag tag-beef">牛肉·快炒</span></div></div>
@@ -983,7 +1072,7 @@
   </section>
 
   <section class="section" id="sec-lamb">
-    <div class="section-header"><span class="s-icon">🫀</span><h2>羊肉</h2><span class="s-count">3 道菜</span></div>
+    <div class="section-header"><span class="s-icon">🐏</span><h2>羊肉</h2><span class="s-count">3 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">孜然羊肉</div><span class="dish-tag tag-lamb">羊肉·炒</span></div></div>
@@ -1040,7 +1129,12 @@
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🫙</div><div class="dish-info"><div class="dish-name">清汤锅底</div><span class="dish-tag tag-hotpot">火锅·清淡</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🌸</div><div class="dish-info"><div class="dish-name">花胶鸡锅底</div><span class="dish-tag tag-hotpot">火锅·滋补</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🌶️</div><div class="dish-info"><div class="dish-name">牛油锅底</div><span class="dish-tag tag-hotpot">火锅·麻辣</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🐷</div><div class="dish-info"><div class="dish-name">猪肚鸡锅底</div><span class="dish-tag tag-hotpot">火锅·特色</span></div></div>
+      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🐖</div><div class="dish-info"><div class="dish-name">猪肚鸡锅底</div><span class="dish-tag tag-hotpot">火锅·特色</span></div></div>
+    </div>
+    <button class="hotpot-sides-btn" id="hotpotSidesBtn" disabled>🥢 配菜清单</button>
+    <div class="hotpot-sides-panel" id="hotpotSidesPanel">
+      <div class="hotpot-sides-title">选择配菜（可多选）</div>
+      <div class="hotpot-sides-grid" id="hotpotSidesGrid"></div>
     </div>
   </section>
 
@@ -1084,16 +1178,29 @@
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">今日推荐搭配 ✨</div>
-    <div class="modal-sub">随机为你搭配 2菜 + 1汤 · 点击 🔓 可锁定喜欢的</div>
-    <div class="combo-cards" id="comboCards"></div>
-    <div class="modal-actions">
-      <button class="modal-btn secondary" id="reshuffleBtn">再抽一次 🎲</button>
-      <button class="modal-btn primary" id="closeBtn">就这样吃！</button>
+    <div class="modal-title" id="modalTitle">今日推荐搭配 ✨</div>
+    <div class="modal-sub" id="modalSub">随机为你搭配 2菜 + 1汤 · 点击 🔓 可锁定喜欢的</div>
+
+    <!-- 主推荐面板 -->
+    <div id="modalMainPanel">
+      <div class="combo-cards" id="comboCards"></div>
+      <div class="modal-actions">
+        <button class="modal-btn secondary" id="reshuffleBtn">再抽一次 🎲</button>
+        <button class="modal-btn primary" id="closeBtn">就这样吃！</button>
+      </div>
+      <div class="modal-actions" style="margin-top:10px;">
+        <button class="modal-btn add-dish-btn" id="addDishBtn" disabled>＋ 随机加一道菜</button>
+        <button class="modal-btn add-dish-btn" id="addNightBtn" disabled>🌙 来点宵夜</button>
+      </div>
     </div>
-    <div class="modal-actions" style="margin-top:10px;">
-      <button class="modal-btn add-dish-btn" id="addDishBtn" disabled>＋ 随机加一道菜</button>
-      <button class="modal-btn add-dish-btn" id="addNightBtn" disabled>🌙 来点宵夜</button>
+
+    <!-- 火锅配菜面板（隐藏） -->
+    <div id="modalHotpotPanel" style="display:none;">
+      <div style="font-size:13px;color:var(--brown-mid);text-align:center;margin-bottom:14px;letter-spacing:0.5px;">选择今天的配菜吧～（可多选）</div>
+      <div class="hotpot-sides-grid" id="modalSidesGrid" style="margin-bottom:16px;"></div>
+      <div class="modal-actions">
+        <button class="modal-btn primary" id="hotpotConfirmBtn">🍲 炫火锅咯！</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1146,10 +1253,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 const categories = {
-  pork:    { label: '猪肉', icon: '🥩', dishes: ['青椒肉丝','酿豆腐'] },
+  pork:    { label: '猪肉', icon: '🐖', dishes: ['青椒肉丝','酿豆腐'] },
   chicken: { label: '鸡肉', icon: '🍗', dishes: ['蒜香鸡翅','鸡翅啫啫煲','盐焗鸡翅煲'] },
-  beef:    { label: '牛肉', icon: '🥩', dishes: ['小炒牛肉','双椒牛肉','咖喱肥牛','牛肉减脂餐','土豆牛肉粒','胸口油吊龙煲','黑椒牛扒','牛肉海鲜芝士焗饭','皮蛋牛肉粥'] },
-  lamb:    { label: '羊肉', icon: '🍖', dishes: ['孜然羊肉','手抓羊肉','香煎羊排'] },
+  beef:    { label: '牛肉', icon: '🐂', dishes: ['小炒牛肉','双椒牛肉','咖喱肥牛','牛肉减脂餐','土豆牛肉粒','胸口油吊龙煲','黑椒牛扒','牛肉海鲜芝士焗饭','皮蛋牛肉粥'] },
+  lamb:    { label: '羊肉', icon: '🐏', dishes: ['孜然羊肉','手抓羊肉','香煎羊排'] },
   seafood: { label: '海鲜', icon: '🦐', dishes: ['白灼虾','辣炒花甲','清蒸鲈鱼','清蒸螃蟹/梭子蟹','青瓜凉拌虾','虾仁豆腐煲','三葱爆鲈鱼'] },
   veggie:  { label: '蔬菜', icon: '🥦', dishes: ['青椒擂皮蛋','蒜蓉菜心','蒜蓉娃娃菜','娃娃菜焖豆腐泡'] },
   soup:    { label: '炖汤', icon: '🍲', dishes: ['番茄鸡蛋汤','花甲海带汤','蔬菜汤','冬瓜牛肉丸虾米汤','紫菜牛肉丸汤','甲鱼汤','鲍鱼汤','苦瓜排骨黄豆汤','乌鸡汤'] },
@@ -1159,7 +1266,7 @@ const categories = {
 const mainDishCats = ['pork','chicken','beef','lamb','seafood','veggie','hotpot'];
 // 可用于"随机加菜"的分类（排除炖汤、火锅、宵夜）
 const extraDishCats = ['pork','chicken','beef','lamb','seafood','veggie'];
-const comboEmojis = { pork:'🥩',chicken:'🍗',beef:'🥩',lamb:'🍖',seafood:'🦐',veggie:'🥦',hotpot:'🔥',night:'🌙',soup:'🍲' };
+const comboEmojis = { pork:'🐖',chicken:'🍗',beef:'🐂',lamb:'🐏',seafood:'🦐',veggie:'🥦',hotpot:'🔥',night:'🌙',soup:'🍲' };
 
 function rand(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
@@ -1253,7 +1360,11 @@ function renderCombo() {
   const lockedNames = new Set(Object.values(lockedSlots).map(i => i.name));
 
   // 生成新 combo，跳过已锁定的 slot
-  let cats = [...mainDishCats];
+  // 如果有锁定菜，排除火锅（避免其余槽抽到「无」）
+  const hasLocked = Object.keys(lockedSlots).length > 0;
+  let cats = hasLocked
+    ? mainDishCats.filter(c => c !== 'hotpot')
+    : [...mainDishCats];
   const cat1Key = cats.splice(Math.floor(Math.random()*cats.length),1)[0];
   const cat2Key = rand(cats);
 
@@ -1474,10 +1585,67 @@ document.getElementById('tabs').addEventListener('click', e => {
   setTimeout(revealCards, 50);
 });
 
-document.getElementById('reshuffleBtn').addEventListener('click', renderCombo);
+document.getElementById('reshuffleBtn').addEventListener('click', () => {
+  document.getElementById('modalMainPanel').style.display = 'block';
+  document.getElementById('modalHotpotPanel').style.display = 'none';
+  document.getElementById('modalTitle').textContent = '今日推荐搭配 ✨';
+  document.getElementById('modalSub').textContent = '随机为你搭配 2菜 + 1汤 · 点击 🔓 可锁定喜欢的';
+  // 清空 modal 内配菜格子（下次重建）
+  document.getElementById('modalSidesGrid').innerHTML = '';
+  renderCombo();
+});
 document.getElementById('addDishBtn').addEventListener('click', addExtraDish);
 document.getElementById('addNightBtn').addEventListener('click', addNightDish);
 document.getElementById('closeBtn').addEventListener('click', () => {
+  // 检查是否抽中火锅
+  const comboNames = [...document.querySelectorAll('#comboCards .combo-name')].map(el => el.textContent);
+  const hotpotDishes = categories['hotpot'].dishes;
+  const hasHotpot = comboNames.some(n => hotpotDishes.includes(n));
+
+  if (hasHotpot) {
+    // 切换到配菜选择面板
+    document.getElementById('modalMainPanel').style.display = 'none';
+    document.getElementById('modalHotpotPanel').style.display = 'block';
+    document.getElementById('modalTitle').textContent = '🔥 选择火锅配菜';
+    document.getElementById('modalSub').textContent = '可多选';
+    // 渲染配菜格子（如果还没渲染）
+    const grid = document.getElementById('modalSidesGrid');
+    if (grid.children.length === 0) {
+      hotpotSides.forEach(side => {
+        const el = document.createElement('div');
+        el.className = 'hotpot-side-item';
+        el.textContent = side;
+        // 同步已选状态
+        if (selectedSides.has(side)) el.classList.add('selected');
+        el.addEventListener('click', () => {
+          el.classList.toggle('selected');
+          // 同步主页面配菜状态
+          const mainEl = [...document.querySelectorAll('.hotpot-side-item')].find(e => e.textContent === side && e !== el);
+          if (el.classList.contains('selected')) {
+            selectedSides.add(side);
+            selectedDishes.set(side, { emoji: '🍲', tag: '火锅·配菜' });
+            if (mainEl) mainEl.classList.add('selected');
+          } else {
+            selectedSides.delete(side);
+            selectedDishes.delete(side);
+            if (mainEl) mainEl.classList.remove('selected');
+          }
+        });
+        grid.appendChild(el);
+      });
+    }
+  } else {
+    document.getElementById('modal').classList.remove('open');
+    showComboSnapshot();
+  }
+});
+
+document.getElementById('hotpotConfirmBtn').addEventListener('click', () => {
+  // 重置弹窗状态
+  document.getElementById('modalMainPanel').style.display = 'block';
+  document.getElementById('modalHotpotPanel').style.display = 'none';
+  document.getElementById('modalTitle').textContent = '今日推荐搭配 ✨';
+  document.getElementById('modalSub').textContent = '随机为你搭配 2菜 + 1汤 · 点击 🔓 可锁定喜欢的';
   document.getElementById('modal').classList.remove('open');
   showComboSnapshot();
 });
@@ -1507,16 +1675,27 @@ function showComboSnapshot() {
   document.getElementById('imgPreviewBody').innerHTML = `
     <div class="img-preview-combo-list">
       ${items.map(item => {
+        if (item.name === '无') return '';
         const imgEl = (item.info && item.info.type === 'img')
           ? `<img class="img-preview-combo-img" src="${item.info.src}" alt="${item.name}">`
           : `<div class="img-preview-combo-emoji">${item.info?.emoji || '🍽️'}</div>`;
+
+        // 如果是火锅锅底，附加已选配菜
+        const isHotpot = categories['hotpot'].dishes.includes(item.name);
+        const sidesHtml = isHotpot && selectedSides.size > 0
+          ? `<div style="margin-top:6px;padding-left:2px;">
+              ${[...selectedSides].map(s => `<span style="display:inline-block;margin:2px 4px 2px 0;font-size:11px;background:#fff3e0;color:#942f14;border-radius:6px;padding:2px 8px;">${s}</span>`).join('')}
+             </div>`
+          : '';
+
         return `
-          <div class="img-preview-combo-item">
+          <div class="img-preview-combo-item" style="align-items:flex-start;">
             ${imgEl}
-            <div>
+            <div style="flex:1;">
               <div style="font-size:10px;color:#c4a882;letter-spacing:1px;font-weight:500;margin-bottom:2px;">${item.label}</div>
               <div style="font-family:'Noto Serif SC',serif;font-size:15px;font-weight:700;color:#3d2b1f;">${item.name}</div>
               <div style="font-size:11px;color:#7a5c45;margin-top:2px;">${item.cat}</div>
+              ${sidesHtml}
             </div>
           </div>`;
       }).join('')}
@@ -1535,10 +1714,10 @@ document.getElementById('modal').addEventListener('click', e => {
 const selectedDishes = new Map(); // name -> { emoji, tag }
 
 const catEmojiMap = {
-  'cat-pork':    '🥩',
+  'cat-pork':    '🐖',
   'cat-chicken': '🍗',
-  'cat-beef':    '🥩',
-  'cat-lamb':    '🫀',
+  'cat-beef':    '🐂',
+  'cat-lamb':    '🐏',
   'cat-seafood': '🦐',
   'cat-veggie':  '🥦',
   'cat-soup':    '🍲',
@@ -1568,7 +1747,8 @@ function renderOrderList() {
   const list = document.getElementById('orderList');
   const count = document.getElementById('orderCount');
   const bottom = document.getElementById('orderBottom');
-  count.textContent = selectedDishes.size;
+  const mainCount = [...selectedDishes.keys()].filter(n => !selectedSides.has(n)).length;
+  count.textContent = mainCount;
 
   if (selectedDishes.size === 0) {
     const panel = document.getElementById('orderPanel');
@@ -1590,27 +1770,97 @@ function renderOrderList() {
   const isDrawerOpen = document.getElementById('orderPanel').classList.contains('open');
   if (isDrawerOpen) bottom.classList.add('open');
 
-  list.innerHTML = [...selectedDishes.entries()].map(([name, info]) => `
-    <div class="order-item" id="oi-${CSS.escape(name)}">
+  list.innerHTML = '';
+
+  // 分离锅底、配菜、普通菜
+  const hotpotMain = [...selectedDishes.entries()].filter(([n, info]) => info.tag.includes('火锅') && !selectedSides.has(n));
+  const sides = [...selectedSides].filter(n => selectedDishes.has(n));
+  const normal = [...selectedDishes.entries()].filter(([n, info]) => !info.tag.includes('火锅') && !selectedSides.has(n));
+
+  // 渲染普通菜
+  normal.forEach(([name, info]) => {
+    const div = document.createElement('div');
+    div.className = 'order-item';
+    div.id = `oi-${CSS.escape(name)}`;
+    div.innerHTML = `
       <span class="order-item-emoji">${info.emoji}</span>
       <div style="flex:1;">
         <div class="order-item-name">${name}</div>
         <div class="order-item-tag">${info.tag}</div>
       </div>
       <button class="order-item-del" data-name="${name}" title="删除">✕</button>
-    </div>
-  `).join('');
+    `;
+    list.appendChild(div);
+  });
 
+  // 渲染火锅锅底（一级）+ 配菜（二级）
+  if (hotpotMain.length > 0 || sides.length > 0) {
+    const hotpotDiv = document.createElement('div');
+    hotpotDiv.className = 'order-item';
+    const mainName = hotpotMain.length > 0 ? hotpotMain[0][0] : '';
+    const mainInfo = hotpotMain.length > 0 ? hotpotMain[0][1] : { emoji: '🔥', tag: '火锅' };
+
+    // 配菜二级列表 HTML
+    const subHtml = sides.length > 0 ? `
+      <div class="order-sub-list">
+        ${sides.map(s => `
+          <div class="order-sub-item">
+            <span class="order-sub-name">· ${s}</span>
+            <button class="order-sub-del" data-side="${s}" title="删除">✕</button>
+          </div>
+        `).join('')}
+      </div>` : '';
+
+    hotpotDiv.innerHTML = `
+      <span class="order-item-emoji">${mainInfo.emoji}</span>
+      <div style="flex:1;">
+        <div class="order-item-name">${mainName || '火锅'}</div>
+        <div class="order-item-tag">${mainInfo.tag}</div>
+        ${subHtml}
+      </div>
+      ${mainName ? `<button class="order-item-del" data-name="${mainName}" title="删除">✕</button>` : ''}
+    `;
+    list.appendChild(hotpotDiv);
+  }
+
+  // 删除事件：普通菜 & 锅底
   list.querySelectorAll('.order-item-del').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       const name = btn.dataset.name;
       selectedDishes.delete(name);
-      // 取消卡片选中状态
       document.querySelectorAll('.dish-card').forEach(c => {
-        if (c.querySelector('.dish-name')?.textContent === name) {
-          c.classList.remove('selected');
-        }
+        if (c.querySelector('.dish-name')?.textContent === name) c.classList.remove('selected');
+      });
+      // 如果删的是锅底，清空所有配菜
+      const wasHotpot = [...selectedSides].some(s => selectedDishes.has(s) || true);
+      if (name && document.querySelector(`#sec-hotpot .dish-card .dish-name`) &&
+          [...document.querySelectorAll('#sec-hotpot .dish-card .dish-name')].some(el => el.textContent === name)) {
+        // 删除所有配菜
+        selectedSides.forEach(side => {
+          selectedDishes.delete(side);
+          document.querySelectorAll('.hotpot-side-item').forEach(el => {
+            if (el.textContent === side) el.classList.remove('selected');
+          });
+        });
+        selectedSides.clear();
+        document.getElementById('hotpotSidesBtn').disabled = true;
+        document.getElementById('hotpotSidesPanel').classList.remove('open');
+        document.getElementById('hotpotSidesBtn').textContent = '🥢 配菜清单';
+      }
+      renderOrderList();
+    });
+  });
+
+  // 删除事件：配菜
+  list.querySelectorAll('.order-sub-del').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const side = btn.dataset.side;
+      selectedSides.delete(side);
+      selectedDishes.delete(side);
+      document.querySelectorAll('.hotpot-side-item').forEach(el => {
+        if (el.textContent === side) el.classList.remove('selected');
       });
       renderOrderList();
     });
@@ -1641,14 +1891,44 @@ document.getElementById('main').addEventListener('click', e => {
   const name = card.querySelector('.dish-name')?.textContent?.trim();
   if (!name) return;
 
+  const isHotpotCard = card.querySelector('.dish-img')?.classList.contains('cat-hotpot');
+
   if (selectedDishes.has(name)) {
+    // 取消选择
     selectedDishes.delete(name);
     card.classList.remove('selected');
+    // 取消火锅时禁用配菜按钮并收起
+    if (isHotpotCard) {
+      document.getElementById('hotpotSidesBtn').disabled = true;
+      document.getElementById('hotpotSidesPanel').classList.remove('open');
+      document.getElementById('hotpotSidesBtn').textContent = '🥢 配菜清单';
+    }
   } else {
+    // 如果是火锅，先取消已选的其他火锅
+    if (isHotpotCard) {
+      document.querySelectorAll('#sec-hotpot .dish-card.selected').forEach(c => {
+        const n = c.querySelector('.dish-name')?.textContent?.trim();
+        if (n) selectedDishes.delete(n);
+        c.classList.remove('selected');
+      });
+    }
     const { emoji, tag } = getEmojiAndTag(card);
     selectedDishes.set(name, { emoji, tag });
     card.classList.add('selected');
 
+    // 选了火锅自动展开配菜清单
+    if (isHotpotCard) {
+      document.getElementById('hotpotSidesBtn').disabled = false;
+      const panel = document.getElementById('hotpotSidesPanel');
+      const btn = document.getElementById('hotpotSidesBtn');
+      if (!panel.classList.contains('open')) {
+        panel.classList.add('open');
+        btn.textContent = '🥢 收起配菜';
+      }
+      setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
   }
   renderOrderList();
 });
@@ -1663,7 +1943,38 @@ function revealCards() {
 }
 setTimeout(revealCards, 100);
 
-// ── 菜单汇总卡片 ──
+// ── 火锅配菜 ──
+const hotpotSides = ['牛肉丸','芝士丸','鱼蛋','墨鱼丸','肥牛卷','肥羊卷','脆皮鸡','蟹柳','油豆腐','小白菜','豆芽','波纹面'];
+const selectedSides = new Set();
+
+// 渲染配菜格子
+const sidesGrid = document.getElementById('hotpotSidesGrid');
+hotpotSides.forEach(side => {
+  const el = document.createElement('div');
+  el.className = 'hotpot-side-item';
+  el.textContent = side;
+  el.addEventListener('click', () => {
+    if (selectedSides.has(side)) {
+      selectedSides.delete(side);
+      el.classList.remove('selected');
+      selectedDishes.delete(side);
+    } else {
+      selectedSides.add(side);
+      el.classList.add('selected');
+      selectedDishes.set(side, { emoji: '🍲', tag: '火锅·配菜' });
+    }
+    renderOrderList();
+  });
+  sidesGrid.appendChild(el);
+});
+
+// 配菜按钮展开/收起
+document.getElementById('hotpotSidesBtn').addEventListener('click', () => {
+  const panel = document.getElementById('hotpotSidesPanel');
+  const btn = document.getElementById('hotpotSidesBtn');
+  const isOpen = panel.classList.toggle('open');
+  btn.textContent = isOpen ? '🥢 收起配菜' : '🥢 配菜清单';
+});
 function getCatClass(tag) {
   if (!tag) return '';
   if (tag.includes('猪肉')) return 'cat-pork';
