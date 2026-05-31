@@ -1129,7 +1129,7 @@
 </div>
 
 <div class="img-preview-overlay" id="imgPreviewOverlay">
-  <div class="img-preview-hint">👆 长按转发给番茄</div>
+  <div class="img-preview-hint">👆 生成菜单后长按转发给番茄吧~</div>
   <div class="img-preview-card" id="imgPreviewCard">
     <div class="img-preview-card-header">
       <div class="img-preview-card-title" id="imgPreviewTitle">今日菜单</div>
@@ -1138,7 +1138,7 @@
     <div class="img-preview-card-body" id="imgPreviewBody"></div>
   </div>
   <div class="img-preview-btns">
-    <button class="img-preview-save-btn" id="imgPreviewSaveBtn">📤 转发菜单</button>
+    <button class="img-preview-save-btn" id="imgPreviewSaveBtn">生成菜单</button>
     <button class="img-preview-close" id="imgPreviewClose">×</button>
   </div>
 </div>
@@ -1312,8 +1312,15 @@ document.getElementById('randomBtn').addEventListener('click', () => {
 let extraDishName = null;
 let nightDishName = null;
 
+function makeDishImgHtml(name, emoji) {
+  const info = dishImgMap[name];
+  if (info && info.type === 'img') {
+    return `<div class="combo-emoji" style="width:72px;height:72px;border-radius:10px;overflow:hidden;flex-shrink:0;"><img src="${info.src}" alt="${name}" style="width:100%;height:100%;object-fit:cover;"></div>`;
+  }
+  return `<div class="combo-emoji" style="width:72px;height:72px;border-radius:10px;background:#f5ece0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:36px;">${emoji}</div>`;
+}
+
 function addExtraDish() {
-  // 收集所有可选菜（排除已推荐的基础菜，不含上次加菜）
   let candidates = [];
   for (const catKey of extraDishCats) {
     for (const dish of categories[catKey].dishes) {
@@ -1326,10 +1333,8 @@ function addExtraDish() {
 
   const picked = rand(candidates);
 
-  // 移除上一张加菜卡片
   const old = document.getElementById('extraDishCard');
   if (old) old.remove();
-  // 从去重集合中移除上次加菜
   if (extraDishName) currentComboNames.delete(extraDishName);
 
   extraDishName = picked.name;
@@ -1339,7 +1344,7 @@ function addExtraDish() {
   card.className = 'combo-card extra';
   card.id = 'extraDishCard';
   card.innerHTML = `
-    <div class="combo-emoji">${picked.emoji}</div>
+    ${makeDishImgHtml(picked.name, picked.emoji)}
     <div class="combo-info">
       <div class="combo-label">加菜 🍽️</div>
       <div class="combo-name">${picked.name}</div>
@@ -1376,7 +1381,7 @@ function addNightDish() {
   card.className = 'combo-card extra';
   card.id = 'nightDishCard';
   card.innerHTML = `
-    <div class="combo-emoji">${picked.emoji}</div>
+    ${makeDishImgHtml(picked.name, picked.emoji)}
     <div class="combo-info">
       <div class="combo-label">宵夜 🌙</div>
       <div class="combo-name">${picked.name}</div>
@@ -1494,19 +1499,11 @@ function showComboSnapshot() {
 
   document.getElementById('imgPreviewTitle').textContent = '今日推荐搭配';
   document.getElementById('imgPreviewDate').textContent = dateStr;
-  document.querySelector('.img-preview-hint').textContent = '👆 长按转发给番茄';
+  document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
   document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
-  document.getElementById('imgPreviewSaveBtn').textContent = '📤 转发菜单';
+  document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
   document.getElementById('imgPreviewSaveBtn').disabled = false;
   // 恢复卡片结构（截图后可能被替换为img）
-  if (!document.getElementById('imgPreviewBody')) {
-    document.getElementById('imgPreviewCard').innerHTML = `
-      <div class="img-preview-card-header">
-        <div class="img-preview-card-title" id="imgPreviewTitle">今日推荐搭配</div>
-        <div class="img-preview-card-date" id="imgPreviewDate">${dateStr}</div>
-      </div>
-      <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
-  }
   document.getElementById('imgPreviewBody').innerHTML = `
     <div class="img-preview-combo-list">
       ${items.map(item => {
@@ -1705,19 +1702,10 @@ function showMenuCard() {
 
   document.getElementById('imgPreviewTitle').textContent = '今日菜单';
   document.getElementById('imgPreviewDate').textContent = dateStr;
-  document.querySelector('.img-preview-hint').textContent = '👆 长按转发给番茄';
+  document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
   document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
-  document.getElementById('imgPreviewSaveBtn').textContent = '📤 转发菜单';
+  document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
   document.getElementById('imgPreviewSaveBtn').disabled = false;
-  // 恢复卡片结构（截图后可能被替换为img）
-  if (!document.getElementById('imgPreviewBody')) {
-    document.getElementById('imgPreviewCard').innerHTML = `
-      <div class="img-preview-card-header">
-        <div class="img-preview-card-title" id="imgPreviewTitle">今日菜单</div>
-        <div class="img-preview-card-date" id="imgPreviewDate">${dateStr}</div>
-      </div>
-      <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
-  }
   document.getElementById('imgPreviewBody').innerHTML = `
     <div style="text-align:center;margin-bottom:14px;">
       <span style="display:inline-block;background:#fff5f0;border:1px solid #f0c8b8;color:#942f14;font-size:12px;padding:4px 14px;border-radius:20px;font-weight:500;letter-spacing:0.5px;">🍽️ 共 ${selectedDishes.size} 道菜</span>
@@ -1741,10 +1729,31 @@ function showMenuCard() {
 document.getElementById('orderSubmitBtn').addEventListener('click', showMenuCard);
 document.getElementById('imgPreviewClose').addEventListener('click', () => {
   document.getElementById('imgPreviewOverlay').classList.remove('open');
+  // 恢复卡片结构
+  document.getElementById('imgPreviewCard').innerHTML = `
+    <div class="img-preview-card-header">
+      <div class="img-preview-card-title" id="imgPreviewTitle">今日菜单</div>
+      <div class="img-preview-card-date" id="imgPreviewDate"></div>
+    </div>
+    <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
+  document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
+  document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
+  document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
+  document.getElementById('imgPreviewSaveBtn').disabled = false;
 });
 document.getElementById('imgPreviewOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('imgPreviewOverlay')) {
     document.getElementById('imgPreviewOverlay').classList.remove('open');
+    document.getElementById('imgPreviewCard').innerHTML = `
+      <div class="img-preview-card-header">
+        <div class="img-preview-card-title" id="imgPreviewTitle">今日菜单</div>
+        <div class="img-preview-card-date" id="imgPreviewDate"></div>
+      </div>
+      <div class="img-preview-card-body" id="imgPreviewBody"></div>`;
+    document.querySelector('.img-preview-hint').textContent = '👆 生成菜单后长按转发给番茄吧~';
+    document.getElementById('imgPreviewSaveBtn').style.display = 'flex';
+    document.getElementById('imgPreviewSaveBtn').textContent = '生成菜单';
+    document.getElementById('imgPreviewSaveBtn').disabled = false;
   }
 });
 
@@ -1768,7 +1777,7 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
     document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄';
     btn.style.display = 'none';
   }).catch(() => {
-    btn.textContent = '📤 转发菜单';
+    btn.textContent = '生成菜单';
     btn.disabled = false;
   });
 });
