@@ -1599,6 +1599,18 @@ const dishImgMap = {
   '海鲜面': {type:'img', src:'https://i.ibb.co/ccXZD00R/image.png', cat:'cat-night'},
   '辣鸡面': {type:'img', src:'https://i.ibb.co/wZPPRqDr/image.png', cat:'cat-night'},
   '小龙虾拌面': {type:'img', src:'https://i.ibb.co/PZfLZcJB/image.png', cat:'cat-night'},
+  '波纹面':     {type:'img', src:'https://i.ibb.co/gb0RS2w7/image.jpg', cat:'cat-hotpot'},
+  '脆皮鸡':     {type:'img', src:'https://i.ibb.co/cXXxLckk/image.jpg', cat:'cat-hotpot'},
+  '豆芽':       {type:'img', src:'https://i.ibb.co/Hf73nxnv/image.jpg', cat:'cat-hotpot'},
+  '肥牛卷':     {type:'img', src:'https://i.ibb.co/NgB5TTMp/image.jpg', cat:'cat-hotpot'},
+  '肥羊卷':     {type:'img', src:'https://i.ibb.co/GNH4KHG/image.jpg', cat:'cat-hotpot'},
+  '墨鱼丸':     {type:'img', src:'https://i.ibb.co/dwS0GqZ6/image.jpg', cat:'cat-hotpot'},
+  '牛肉丸':     {type:'img', src:'https://i.ibb.co/QsSjqZH/image.jpg', cat:'cat-hotpot'},
+  '小白菜':     {type:'img', src:'https://i.ibb.co/HTHG5SfW/image.jpg', cat:'cat-hotpot'},
+  '蟹柳':       {type:'img', src:'https://i.ibb.co/4R74ZtVj/image.jpg', cat:'cat-hotpot'},
+  '油豆腐':     {type:'img', src:'https://i.ibb.co/7Ngy01nR/image.jpg', cat:'cat-hotpot'},
+  '鱼蛋':       {type:'img', src:'https://i.ibb.co/yc4zqKB0/image.jpg', cat:'cat-hotpot'},
+  '芝士丸':     {type:'img', src:'https://i.ibb.co/93sbvqZ0/image.jpg', cat:'cat-hotpot'},
 };
 
 // ── 注入菜品图片 ──
@@ -2120,7 +2132,16 @@ function showMenuCard() {
 
   const now = new Date();
   const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
-  const entries = [...selectedDishes.entries()];
+  const allEntries = [...selectedDishes.entries()];
+  const hotpotDishNames = new Set(categories['hotpot'].dishes);
+
+  // 排序：锅底第一，配菜紧随，其余菜品最后
+  const hotpotMain = allEntries.filter(([n]) => hotpotDishNames.has(n));
+  const sides       = allEntries.filter(([n]) => selectedSides.has(n));
+  const others      = allEntries.filter(([n]) => !hotpotDishNames.has(n) && !selectedSides.has(n));
+  const entries = hotpotMain.length > 0
+    ? [...hotpotMain, ...sides, ...others]
+    : allEntries;
 
   document.getElementById('imgPreviewTitle').textContent = '今日菜单';
   document.getElementById('imgPreviewDate').textContent = dateStr;
