@@ -1438,7 +1438,6 @@ function renderCombo() {
   const lockedNames = new Set(Object.values(lockedSlots).map(i => i.name));
 
   // 生成新 combo，跳过已锁定的 slot
-  // 如果有锁定菜，排除火锅（避免其余槽抽到「无」）
   const hasLocked = Object.keys(lockedSlots).length > 0;
   let cats = hasLocked
     ? mainDishCats.filter(c => c !== 'hotpot')
@@ -1448,7 +1447,6 @@ function renderCombo() {
 
   // 判断是否抽中火锅
   const isHotpot = cat1Key === 'hotpot' || cat2Key === 'hotpot';
-  const hotpotKey = cat1Key === 'hotpot' ? cat1Key : cat2Key;
   const hotpotDish = randExcluding(categories['hotpot'].dishes, lockedNames);
   const none = { label:'', name:'无', cat:'', emoji:'🚫' };
 
@@ -1688,7 +1686,10 @@ document.getElementById('reshuffleBtn').addEventListener('click', () => {
 document.getElementById('addDishBtn').addEventListener('click', addExtraDish);
 document.getElementById('addNightBtn').addEventListener('click', addNightDish);
 document.getElementById('closeBtn').addEventListener('click', () => {
-  const comboNames = [...document.querySelectorAll('#comboCards .combo-name')].map(el => el.textContent);
+  // 只取菜名文字，排除招牌子标签的文字
+  const comboNames = [...document.querySelectorAll('#comboCards .combo-name')].map(el => {
+    return [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join('').trim();
+  });
   const hotpotDishes = categories['hotpot'].dishes;
   const hotpotName = comboNames.find(n => hotpotDishes.includes(n));
 
@@ -1708,11 +1709,10 @@ document.getElementById('closeBtn').addEventListener('click', () => {
     // 把其他随机推荐的非火锅菜也写入 selectedDishes
     comboNames.forEach(name => {
       if (!name || name === '无' || hotpotDishes.includes(name)) return;
-      // 找对应分类
       for (const [catKey, cat] of Object.entries(categories)) {
+        if (catKey === 'signature') continue; // 跳过招牌分类
         if (cat.dishes.includes(name)) {
           selectedDishes.set(name, { emoji: comboEmojis[catKey], tag: cat.label });
-          // 高亮对应卡片
           document.querySelectorAll('.dish-card').forEach(c => {
             if (c.querySelector('.dish-name')?.textContent?.trim() === name)
               c.classList.add('selected');
@@ -1758,6 +1758,7 @@ document.getElementById('closeBtn').addEventListener('click', () => {
     comboNames.forEach(name => {
       if (!name || name === '无') return;
       for (const [catKey, cat] of Object.entries(categories)) {
+        if (catKey === 'signature') continue; // 跳过招牌分类，避免 emoji 取不到
         if (cat.dishes.includes(name)) {
           selectedDishes.set(name, { emoji: comboEmojis[catKey], tag: cat.label });
           document.querySelectorAll('.dish-card').forEach(c => {
@@ -1935,15 +1936,24 @@ function renderOrderList() {
   const sides = [...selectedSides].filter(n => selectedDishes.has(n));
   const normal = [...selectedDishes.entries()].filter(([n, info]) => !info.tag.includes('火锅') && !selectedSides.has(n));
 
-  // 渲染普通菜
-  normal.forEach(([name, info]) => {
+  const signatureSet = new Set(categories['signature']?.dishes || []);
+
+  // 渲染普通菜（招牌菜排前面）
+  const normalSorted = [...normal].sort(([a], [b]) => {
+    const aS = signatureSet.has(a) ? 0 : 1;
+    const bS = signatureSet.has(b) ? 0 : 1;
+    return aS - bS;
+  });
+
+  normalSorted.forEach(([name, info]) => {
     const div = document.createElement('div');
     div.className = 'order-item';
     div.id = `oi-${CSS.escape(name)}`;
+    const sigBadge = signatureSet.has(name) ? '<span class="tag-signature" style="vertical-align:middle;margin-left:5px;">招牌</span>' : '';
     div.innerHTML = `
       <span class="order-item-emoji">${info.emoji}</span>
       <div style="flex:1;">
-        <div class="order-item-name">${name}</div>
+        <div class="order-item-name" style="display:flex;align-items:center;gap:0;">${name}${sigBadge}</div>
         <div class="order-item-tag">${info.tag}</div>
       </div>
       <button class="order-item-del" data-name="${name}" title="删除">✕</button>
