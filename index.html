@@ -1981,9 +1981,9 @@ function showMenuCard() {
           ? `<img class="img-preview-card-item-img" src="${imgInfo.src}" alt="${name}">`
           : `<div class="img-preview-card-item-emoji">${info.emoji}</div>`;
         const sigBadge = signatureNames.has(name)
-          ? '<div style="text-align:center;margin-top:2px;"><span class="tag-signature" style="display:inline-block;padding:1px 4px;letter-spacing:0.5px;">招牌</span></div>'
+          ? '<div style="text-align:center;margin-top:2px;"><span style="display:inline-block;padding:1px 6px;letter-spacing:0.5px;font-size:9px;background:#942f14;color:#fff;border-radius:20px;font-weight:700;">招牌</span></div>'
           : '';
-        return `<div class="img-preview-card-item">${imgEl}<div class="img-preview-card-item-name"><div>${name}</div>${sigBadge}</div></div>`;
+        return `<div class="img-preview-card-item">${imgEl}<div class="img-preview-card-item-name" style="text-align:center;"><div>${name}</div>${sigBadge}</div></div>`;
       }).join('')}
     </div>
     <div class="img-preview-card-divider"></div>
