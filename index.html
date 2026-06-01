@@ -923,7 +923,7 @@
     width: 100%;
     max-width: 360px;
     background: #fff9f4;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   }
@@ -2270,13 +2270,13 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
     scale: 3,
     useCORS: true,
     allowTaint: true,
-    backgroundColor: '#fff9f4',
+    backgroundColor: '#942f14',
     logging: false
   }).then(canvas => {
     const imgUrl = canvas.toDataURL('image/jpeg', 0.95);
     // 用截图替换卡片，用户长按即可在微信发送给朋友
     document.getElementById('imgPreviewCard').innerHTML =
-      `<img src="${imgUrl}" style="width:100%;display:block;border-radius:20px;" alt="番茄私厨菜单">`;
+      `<img src="${imgUrl}" style="width:100%;display:block;border-radius:0 0 20px 20px;" alt="番茄私厨菜单">`;
     document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄吧~';
     btn.style.display = 'none';
   }).catch(() => {
