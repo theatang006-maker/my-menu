@@ -508,6 +508,16 @@
     position: relative;
     top: -1px;
   }
+  .img-preview-card-item-name .tag-signature {
+    display: inline-block;
+    margin: 2px 0 0 0;
+    top: 0;
+    letter-spacing: 0.5px;
+    padding: 1px 4px;
+  }
+  .img-preview-card-item-name {
+    text-align: center;
+  }
   .tag-lamb    { background: #f5edde; color: #8a6230; }
   .tag-seafood { background: #ddf0ff; color: #1a6fa0; }
   .tag-veggie  { background: #e6f8df; color: #3a7a20; }
@@ -1332,7 +1342,7 @@
 // 只读取 .combo-name 的纯文本（排除招牌 span 等子标签）
 function getCleanName(el) {
   if (!el) return '';
-  return [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join('').trim();
+  return Array.from(el.childNodes).filter(function(n){ return n.nodeType === 3; }).map(function(n){ return n.textContent; }).join('').trim();
 }
 
 const categories = {
@@ -1696,8 +1706,8 @@ document.getElementById('addDishBtn').addEventListener('click', addExtraDish);
 document.getElementById('addNightBtn').addEventListener('click', addNightDish);
 document.getElementById('closeBtn').addEventListener('click', () => {
   // 只取菜名文字，排除招牌子标签的文字
-  const comboNames = [...document.querySelectorAll('#comboCards .combo-name')].map(el => {
-    return [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join('').trim();
+  const comboNames = Array.from(document.querySelectorAll('#comboCards .combo-name')).map(function(el) {
+    return Array.from(el.childNodes).filter(function(n){ return n.nodeType === 3; }).map(function(n){ return n.textContent; }).join('').trim();
   });
   const hotpotDishes = categories['hotpot'].dishes;
   const hotpotName = comboNames.find(n => hotpotDishes.includes(n));
@@ -1958,7 +1968,7 @@ function renderOrderList() {
     const div = document.createElement('div');
     div.className = 'order-item';
     div.id = `oi-${CSS.escape(name)}`;
-    const sigBadge = signatureSet.has(name) ? '<span class="tag-signature" style="vertical-align:middle;margin-left:5px;">招牌</span>' : '';
+    const sigBadge = signatureSet.has(name) ? '<span class="tag-signature">招牌</span>' : '';
     div.innerHTML = `
       <span class="order-item-emoji">${info.emoji}</span>
       <div style="flex:1;">
@@ -2229,7 +2239,7 @@ function showMenuCard() {
           ? `<img class="img-preview-card-item-img" src="${imgInfo.src}" alt="${name}">`
           : `<div class="img-preview-card-item-emoji">${info.emoji}</div>`;
         const sigBadge = signatureNames.has(name)
-          ? `<span class="tag-signature" style="display:block;margin:2px auto 0;font-size:9px;padding:1px 5px;border-radius:10px;width:fit-content;">招牌</span>`
+          ? '<span class="tag-signature">招牌</span>'
           : '';
         return `<div class="img-preview-card-item">${imgEl}<div class="img-preview-card-item-name">${name}${sigBadge}</div></div>`;
       }).join('')}
