@@ -1326,6 +1326,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
+// 只读取 .combo-name 的纯文本（排除招牌 span 等子标签）
+function getCleanName(el) {
+  if (!el) return '';
+  return [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join('').trim();
+}
+
 const categories = {
   signature: { label: '招牌', icon: '👑', dishes: ['鸡翅啫啫煲','盐焗鸡翅煲','小炒牛肉','手抓羊肉','青瓜凉拌虾','虾仁豆腐煲','蔬菜汤'] },
   pork:    { label: '猪肉', icon: '🐖', dishes: ['青椒肉丝','酿豆腐'] },
@@ -1808,11 +1814,6 @@ document.getElementById('hotpotConfirmBtn').addEventListener('click', () => {
   bar.classList.add('open');
   bottom.classList.add('open');
 });
-
-// 只读取 .combo-name 的纯文本（排除招牌 span 等子标签）
-function getCleanName(el) {
-  return [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join('').trim();
-}
 
 function showComboSnapshot() {
   const cards = document.querySelectorAll('#comboCards .combo-card');
