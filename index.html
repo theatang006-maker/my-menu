@@ -2193,14 +2193,21 @@ function showMenuCard() {
   const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")} · ${['周日','周一','周二','周三','周四','周五','周六'][now.getDay()]}`;
   const allEntries = [...selectedDishes.entries()];
   const hotpotDishNames = new Set(categories['hotpot'].dishes);
+  const signatureNames = new Set(categories['signature']?.dishes || []);
 
-  // 排序：锅底第一，配菜紧随，其余菜品最后
+  // 排序：锅底第一，配菜紧随，招牌菜优先，其余菜品最后
   const hotpotMain = allEntries.filter(([n]) => hotpotDishNames.has(n));
   const sides       = allEntries.filter(([n]) => selectedSides.has(n));
   const others      = allEntries.filter(([n]) => !hotpotDishNames.has(n) && !selectedSides.has(n));
+
+  // 非火锅时，招牌菜排前面
+  const othersSorted = [...others].sort(([a], [b]) => {
+    return (signatureNames.has(b) ? 1 : 0) - (signatureNames.has(a) ? 1 : 0);
+  });
+
   const entries = hotpotMain.length > 0
-    ? [...hotpotMain, ...sides, ...others]
-    : allEntries;
+    ? [...hotpotMain, ...sides, ...othersSorted]
+    : othersSorted;
 
   document.getElementById('imgPreviewTitle').textContent = '今日菜单';
   document.getElementById('imgPreviewDate').textContent = dateStr;
@@ -2218,7 +2225,10 @@ function showMenuCard() {
         const imgEl = (imgInfo && imgInfo.type === 'img')
           ? `<img class="img-preview-card-item-img" src="${imgInfo.src}" alt="${name}">`
           : `<div class="img-preview-card-item-emoji">${info.emoji}</div>`;
-        return `<div class="img-preview-card-item">${imgEl}<div class="img-preview-card-item-name">${name}</div></div>`;
+        const sigBadge = signatureNames.has(name)
+          ? `<span class="tag-signature" style="display:block;margin:2px auto 0;font-size:9px;padding:1px 5px;border-radius:10px;width:fit-content;">招牌</span>`
+          : '';
+        return `<div class="img-preview-card-item">${imgEl}<div class="img-preview-card-item-name">${name}${sigBadge}</div></div>`;
       }).join('')}
     </div>
     <div class="img-preview-card-divider"></div>
