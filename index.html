@@ -923,7 +923,7 @@
     width: 100%;
     max-width: 360px;
     background: #fff9f4;
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0,0,0,0.5);
   }
@@ -2266,6 +2266,10 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
   btn.disabled = true;
 
   const card = document.getElementById('imgPreviewCard');
+  // 截图前临时去掉圆角，避免白色角
+  const origRadius = card.style.borderRadius;
+  card.style.borderRadius = '0';
+
   html2canvas(card, {
     scale: 3,
     useCORS: true,
@@ -2273,13 +2277,14 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
     backgroundColor: '#942f14',
     logging: false
   }).then(canvas => {
+    card.style.borderRadius = origRadius;
     const imgUrl = canvas.toDataURL('image/jpeg', 0.95);
-    // 用截图替换卡片，用户长按即可在微信发送给朋友
     document.getElementById('imgPreviewCard').innerHTML =
-      `<img src="${imgUrl}" style="width:100%;display:block;border-radius:0 0 20px 20px;" alt="番茄私厨菜单">`;
+      `<img src="${imgUrl}" style="width:100%;display:block;border-radius:0;" alt="番茄私厨菜单">`;
     document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄吧~';
     btn.style.display = 'none';
   }).catch(() => {
+    card.style.borderRadius = origRadius;
     btn.textContent = '生成菜单';
     btn.disabled = false;
   });
