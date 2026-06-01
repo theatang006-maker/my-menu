@@ -1978,12 +1978,12 @@ function showMenuCard() {
       ${entries.map(([name, info]) => {
         const imgInfo = dishImgMap[name];
         const imgEl = (imgInfo && imgInfo.type === 'img')
-          ? `<img class="img-preview-card-item-img" src="${imgInfo.src}" alt="${name}">`
-          : `<div class="img-preview-card-item-emoji">${info.emoji}</div>`;
+          ? `<img src="${imgInfo.src}" alt="${name}" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;">`
+          : `<div style="width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:28px;background:#f5ece0;">${info.emoji}</div>`;
         const sigBadge = signatureNames.has(name)
-          ? '<div style="text-align:center;margin-top:2px;"><span style="display:inline-block;padding:1px 6px;letter-spacing:0.5px;font-size:9px;background:#942f14;color:#fff;border-radius:20px;font-weight:700;">招牌</span></div>'
+          ? `<div style="text-align:center;margin-top:3px;"><span style="display:inline-block;padding:1px 6px;font-size:9px;background:#942f14;color:#fff;border-radius:20px;font-weight:700;letter-spacing:0.5px;">招牌</span></div>`
           : '';
-        return `<div class="img-preview-card-item">${imgEl}<div class="img-preview-card-item-name" style="text-align:center;"><div>${name}</div>${sigBadge}</div></div>`;
+        return `<div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(61,43,31,0.1);">${imgEl}<div style="font-family:'Noto Serif SC',serif;font-size:10px;font-weight:600;color:#3d2b1f;padding:5px 4px 7px;line-height:1.4;text-align:center;">${name}${sigBadge}</div></div>`;
       }).join('')}
     </div>
     <div class="img-preview-card-divider"></div>
