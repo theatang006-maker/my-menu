@@ -1429,7 +1429,7 @@ function renderComboCard(item, idx, isLocked) {
 function rebuildCurrentComboNames() {
   currentComboNames = new Set();
   document.querySelectorAll('#comboCards .combo-name').forEach(el => {
-    currentComboNames.add(el.textContent);
+    currentComboNames.add(getCleanName(el));
   });
 }
 
@@ -1476,12 +1476,12 @@ function renderCombo() {
   extras.forEach(e => container.appendChild(e));
 
   currentComboNames = new Set();
-  container.querySelectorAll('.combo-name').forEach(el => currentComboNames.add(el.textContent));
+  container.querySelectorAll('.combo-name').forEach(el => currentComboNames.add(getCleanName(el)));
 
   // 重新随机时清空加菜（非锁定）
   extraDishName = null;
   nightDishName = null;
-  extras.forEach(e => { currentComboNames.delete(e.querySelector('.combo-name')?.textContent); e.remove(); });
+  extras.forEach(e => { currentComboNames.delete(getCleanName(e.querySelector('.combo-name'))); e.remove(); });
 
   // 启用按钮
   document.getElementById('addDishBtn').disabled = false;
@@ -1809,6 +1809,11 @@ document.getElementById('hotpotConfirmBtn').addEventListener('click', () => {
   bottom.classList.add('open');
 });
 
+// 只读取 .combo-name 的纯文本（排除招牌 span 等子标签）
+function getCleanName(el) {
+  return [...el.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join('').trim();
+}
+
 function showComboSnapshot() {
   const cards = document.querySelectorAll('#comboCards .combo-card');
   if (!cards.length) return;
@@ -1818,7 +1823,7 @@ function showComboSnapshot() {
 
   const items = Array.from(cards).map(card => {
     const label = card.querySelector('.combo-label')?.textContent || '';
-    const name  = card.querySelector('.combo-name')?.textContent || '';
+    const name  = getCleanName(card.querySelector('.combo-name'));
     const cat   = card.querySelector('.combo-cat')?.textContent || '';
     const info  = dishImgMap[name];
     return { label, name, cat, info };
