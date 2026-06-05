@@ -521,7 +521,6 @@
   .dish-card.selected {
     outline: 3px solid #ecad40;
     box-shadow: 0 0 0 6px rgba(236,173,64,0.15), 0 2px 14px var(--shadow);
-    transform: scale(1.03);
   }
   .dish-card .selected-badge {
     display: none;
@@ -701,6 +700,19 @@
     color: var(--accent);
   }
   .order-reset-btn:active { transform: scale(0.97); }
+
+  /* ── 已点清单背景虚化遮罩 ── */
+  .order-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 140;
+    background: rgba(26,18,8,0.35);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    animation: overlayIn 0.3s ease;
+  }
+  .order-backdrop.open { display: block; }
 
 
   /* ── 火锅配菜 ── */
@@ -963,7 +975,7 @@
 
 <main id="main">
   <section class="section active" id="sec-signature">
-    <div class="section-header"><span class="s-icon">👑</span><h2>招牌</h2><span class="s-count">7 道菜</span></div>
+    <div class="section-header"><span class="s-icon">👑</span><h2>招牌</h2><span class="s-count">8 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">鸡翅啫啫煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·九层塔·啫</span></div></div>
@@ -973,15 +985,17 @@
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">青瓜凉拌虾<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·青瓜·wasabi</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">虾仁豆腐煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·嫩豆腐·咸蛋黄</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🥕</div><div class="dish-info"><div class="dish-name">蔬菜汤<span class="tag-signature">招牌</span></div><span class="dish-tag tag-soup">白萝卜·娃娃菜·牛肉丸</span></div></div>
+      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺<span class="tag-signature">招牌</span></div><span class="dish-tag tag-pork">猪肉·韭菜</span></div></div>
     </div>
   </section>
 
   <section class="section" id="sec-pork">
-    <div class="section-header"><span class="s-icon">🐖</span><h2>猪肉</h2><span class="s-count">2 道菜</span></div>
+    <div class="section-header"><span class="s-icon">🐖</span><h2>猪肉</h2><span class="s-count">3 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">青椒肉丝</div><span class="dish-tag tag-pork">猪肉·青椒</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">酿豆腐</div><span class="dish-tag tag-pork">猪肉·油豆腐</span></div></div>
+      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺<span class="tag-signature">招牌</span></div><span class="dish-tag tag-pork">猪肉·韭菜</span></div></div>
     </div>
   </section>
 
@@ -1079,12 +1093,11 @@
   </section>
 
   <section class="section" id="sec-night">
-    <div class="section-header"><span class="s-icon">🌙</span><h2>宵夜</h2><span class="s-count">6 道</span></div>
+    <div class="section-header"><span class="s-icon">🌙</span><h2>宵夜</h2><span class="s-count">5 道</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🫓</div><div class="dish-info"><div class="dish-name">手抓饼</div><span class="dish-tag tag-night">宵夜·煎</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🥜</div><div class="dish-info"><div class="dish-name">花生汤圆</div><span class="dish-tag tag-night">宵夜·甜品</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺</div><span class="dish-tag tag-night">宵夜·煎饺</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🍜</div><div class="dish-info"><div class="dish-name">海鲜面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🌶️</div><div class="dish-info"><div class="dish-name">辣鸡面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
       <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🦞</div><div class="dish-info"><div class="dish-name">小龙虾拌面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
@@ -1092,6 +1105,7 @@
   </section>
 </main>
 
+<div class="order-backdrop" id="orderBackdrop"></div>
 <div class="order-drawer" id="orderDrawer">
   <div class="order-panel" id="orderPanel">
     <div class="order-panel-inner" id="orderList">
@@ -1170,8 +1184,8 @@ function getCleanName(el) {
 }
 
 const categories = {
-  signature: { label: '招牌', icon: '👑', dishes: ['鸡翅啫啫煲','盐焗鸡翅煲','小炒牛肉','手抓羊肉','青瓜凉拌虾','虾仁豆腐煲','蔬菜汤'] },
-  pork:    { label: '猪肉', icon: '🐖', dishes: ['青椒肉丝','酿豆腐'] },
+  signature: { label: '招牌', icon: '👑', dishes: ['鸡翅啫啫煲','盐焗鸡翅煲','小炒牛肉','手抓羊肉','青瓜凉拌虾','虾仁豆腐煲','蔬菜汤','韭菜猪肉煎饺'] },
+  pork:    { label: '猪肉', icon: '🐖', dishes: ['青椒肉丝','酿豆腐','韭菜猪肉煎饺'] },
   chicken: { label: '鸡肉', icon: '🐓', dishes: ['蒜香鸡翅','鸡翅啫啫煲','盐焗鸡翅煲'] },
   beef:    { label: '牛肉', icon: '🐂', dishes: ['小炒牛肉','双椒牛肉','咖喱肥牛','牛肉减脂餐','土豆牛肉粒','胸口油吊龙煲','黑椒牛扒','牛肉海鲜芝士焗饭','皮蛋牛肉粥'] },
   lamb:    { label: '羊肉', icon: '🐏', dishes: ['孜然羊肉','手抓羊肉','香煎羊排'] },
@@ -1179,7 +1193,7 @@ const categories = {
   veggie:  { label: '蔬菜', icon: '🥦', dishes: ['青椒擂皮蛋','蒜蓉菜心','蒜蓉娃娃菜','娃娃菜焖豆腐泡'] },
   soup:    { label: '炖汤', icon: '🍲', dishes: ['番茄鸡蛋汤','花甲海带汤','蔬菜汤','冬瓜牛肉丸虾米汤','紫菜牛肉丸汤','甲鱼汤','鲍鱼汤','苦瓜排骨黄豆汤','乌鸡汤'] },
   hotpot:  { label: '火锅', icon: '🔥', dishes: ['清汤锅底','花胶鸡锅底','牛油锅底','猪肚鸡锅底'] },
-  night:   { label: '宵夜', icon: '🌙', dishes: ['手抓饼','花生汤圆','韭菜猪肉煎饺','海鲜面','辣鸡面','小龙虾拌面'] }
+  night:   { label: '宵夜', icon: '🌙', dishes: ['手抓饼','花生汤圆','海鲜面','辣鸡面','小龙虾拌面'] }
 };
 const mainDishCats = ['pork','chicken','beef','lamb','seafood','veggie','hotpot'];
 // 可用于"随机加菜"的分类（排除炖汤、火锅、宵夜）
@@ -1460,7 +1474,7 @@ const dishImgMap = {
   '猪肚鸡锅底': {type:'img', src:'https://i.ibb.co/VY0Y7v4V/image.jpg', cat:'cat-hotpot'},
   '手抓饼': {type:'img', src:'https://i.ibb.co/Ld7k6gB2/image.jpg', cat:'cat-night'},
   '花生汤圆': {type:'img', src:'https://i.ibb.co/rGzR2M3s/image.jpg', cat:'cat-night'},
-  '韭菜猪肉煎饺': {type:'img', src:'https://i.ibb.co/Hf418VSs/image.jpg', cat:'cat-night'},
+  '韭菜猪肉煎饺': {type:'img', src:'https://i.ibb.co/Hf418VSs/image.jpg', cat:'cat-pork'},
   '海鲜面': {type:'img', src:'https://i.ibb.co/ccXZD00R/image.png', cat:'cat-night'},
   '辣鸡面': {type:'img', src:'https://i.ibb.co/wZPPRqDr/image.png', cat:'cat-night'},
   '小龙虾拌面': {type:'img', src:'https://i.ibb.co/PZfLZcJB/image.png', cat:'cat-night'},
@@ -1609,6 +1623,7 @@ document.getElementById('closeBtn').addEventListener('click', () => {
     panel.classList.add('open');
     bar.classList.add('open');
     bottom.classList.add('open');
+    document.getElementById('orderBackdrop').classList.add('open');
   }
 });
 
@@ -1638,6 +1653,7 @@ document.getElementById('hotpotConfirmBtn').addEventListener('click', () => {
   panel.classList.add('open');
   bar.classList.add('open');
   bottom.classList.add('open');
+  document.getElementById('orderBackdrop').classList.add('open');
 });
 
 document.getElementById('modal').addEventListener('click', e => {
@@ -1814,14 +1830,21 @@ function toggleDrawer() {
   const panel = document.getElementById('orderPanel');
   const bar = document.getElementById('orderBar');
   const bottom = document.getElementById('orderBottom');
+  const backdrop = document.getElementById('orderBackdrop');
   const isOpen = panel.classList.contains('open');
   panel.classList.toggle('open', !isOpen);
   bar.classList.toggle('open', !isOpen);
+  backdrop.classList.toggle('open', !isOpen);
   if (selectedDishes.size > 0) {
     bottom.classList.toggle('open', !isOpen);
   }
   if (!isOpen) renderOrderList();
 }
+
+document.getElementById('orderBackdrop').addEventListener('click', () => {
+  const panel = document.getElementById('orderPanel');
+  if (panel.classList.contains('open')) toggleDrawer();
+});
 
 document.getElementById('tabs').addEventListener('scroll', function() {
   const tabs = this;
