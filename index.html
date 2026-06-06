@@ -2125,13 +2125,46 @@ document.getElementById('imgPreviewOverlay').addEventListener('click', e => {
   }
 });
 
-document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
+document.getElementById('imgPreviewSaveBtn').addEventListener('click', async () => {
   const btn = document.getElementById('imgPreviewSaveBtn');
   btn.textContent = '生成中...';
   btn.disabled = true;
 
   const card = document.getElementById('imgPreviewCard');
-  // 截图前临时去掉圆角，避免白色角
+
+  // 将卡片内所有外链图片预先转成 base64 data URL，绕开 html2canvas 的跨域限制
+  async function toDataURL(src) {
+    try {
+      const res = await fetch(src, { mode: 'cors' });
+      const blob = await res.blob();
+      return await new Promise(resolve => {
+        const r = new FileReader();
+        r.onload = () => resolve(r.result);
+        r.readAsDataURL(blob);
+      });
+    } catch {
+      return null; // 失败时保留原 src，降级处理
+    }
+  }
+
+  const imgs = [...card.querySelectorAll('img')];
+  const origSrcs = imgs.map(img => img.src);
+  // 并发转换所有图片
+  const dataSrcs = await Promise.all(origSrcs.map(src => toDataURL(src)));
+  imgs.forEach((img, i) => {
+    if (dataSrcs[i]) {
+      img.src = dataSrcs[i];
+    } else {
+      // fetch 失败：用纯色背景 + emoji 占位，确保截图不会崩溃
+      const w = img.naturalWidth || 80;
+      const h = img.naturalHeight || 80;
+      const fb = document.createElement('div');
+      fb.style.cssText = `width:${w}px;height:${h}px;display:flex;align-items:center;justify-content:center;font-size:28px;background:#f5ece0;`;
+      fb.textContent = '🍽️';
+      img.replaceWith(fb);
+    }
+  });
+
   const origRadius = card.style.borderRadius;
   card.style.borderRadius = '0';
 
@@ -2148,10 +2181,13 @@ document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
       `<img src="${imgUrl}" style="width:100%;display:block;border-radius:0;" alt="番茄私厨菜单">`;
     document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄吧~';
     btn.style.display = 'none';
-  }).catch(() => {
+  }).catch(err => {
+    // 还原图片 src
+    imgs.forEach((img, i) => { img.src = origSrcs[i]; });
     card.style.borderRadius = origRadius;
-    btn.textContent = '生成菜单';
+    btn.textContent = '生成失败，请重试';
     btn.disabled = false;
+    console.error('html2canvas error:', err);
   });
 });
 
