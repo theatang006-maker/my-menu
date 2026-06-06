@@ -787,15 +787,17 @@
     z-index: 400;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 20px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .img-preview-overlay.open { display: flex; animation: overlayIn 0.25s ease; }
   .img-preview-hint {
     color: rgba(255,255,255,0.9);
     font-size: 14px;
     letter-spacing: 1px;
+    margin-top: auto;
     margin-bottom: 16px;
     display: flex;
     align-items: center;
@@ -809,6 +811,7 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    flex-shrink: 0;
   }
   .img-preview-card-header {
     background: linear-gradient(135deg,#942f14 0%,#6b1e0a 100%);
@@ -926,6 +929,8 @@
     align-items: center;
     gap: 0;
     margin-top: 4px;
+    margin-bottom: auto;
+    flex-shrink: 0;
   }
   .img-preview-loading {
     color: rgba(255,255,255,0.8);
@@ -1707,10 +1712,12 @@ function renderOrderList() {
   if (selectedDishes.size === 0) {
     const panel = document.getElementById('orderPanel');
     const bar = document.getElementById('orderBar');
+    const backdrop = document.getElementById('orderBackdrop');
     if (panel.classList.contains('open')) {
       // 删完菜触发：收起抽屉，不显示提示
       panel.classList.remove('open');
       bar.classList.remove('open');
+      backdrop.classList.remove('open');
       list.innerHTML = '';
     } else {
       // 未点菜手动展开：显示引导提示（由 toggleDrawer 展开后 renderOrderList 会被调用）
