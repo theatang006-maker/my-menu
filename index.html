@@ -1800,7 +1800,9 @@ function renderOrderList() {
       const name = btn.dataset.name;
       selectedDishes.delete(name);
       document.querySelectorAll('.dish-card').forEach(c => {
-        if (c.querySelector('.dish-name')?.textContent === name) c.classList.remove('selected');
+        const n = c.querySelector('.dish-name');
+        const cn = n ? (n.firstChild?.nodeType === 3 ? n.firstChild.textContent : n.textContent).trim() : null;
+        if (cn === name) c.classList.remove('selected');
       });
       // 如果删的是锅底，清空所有配菜
       const wasHotpot = [...selectedSides].some(s => selectedDishes.has(s) || true);
@@ -1878,10 +1880,19 @@ document.getElementById('main').addEventListener('click', e => {
 
   const isHotpotCard = card.querySelector('.dish-img')?.classList.contains('cat-hotpot');
 
+  // 同步所有同名卡片的选中状态（招牌区与分类区共享同一道菜）
+  function syncCardState(dishName, selected) {
+    document.querySelectorAll('.dish-card').forEach(c => {
+      const n = c.querySelector('.dish-name');
+      const cn = n ? (n.firstChild?.nodeType === 3 ? n.firstChild.textContent : n.textContent).trim() : null;
+      if (cn === dishName) c.classList.toggle('selected', selected);
+    });
+  }
+
   if (selectedDishes.has(name)) {
     // 取消选择
     selectedDishes.delete(name);
-    card.classList.remove('selected');
+    syncCardState(name, false);
     // 取消火锅时禁用配菜按钮并收起
     if (isHotpotCard) {
       document.getElementById('hotpotSidesBtn').disabled = true;
@@ -1893,13 +1904,12 @@ document.getElementById('main').addEventListener('click', e => {
     if (isHotpotCard) {
       document.querySelectorAll('#sec-hotpot .dish-card.selected').forEach(c => {
         const n = c.querySelector('.dish-name')?.textContent?.trim();
-        if (n) selectedDishes.delete(n);
-        c.classList.remove('selected');
+        if (n) { selectedDishes.delete(n); syncCardState(n, false); }
       });
     }
     const { emoji, tag } = getEmojiAndTag(card);
     selectedDishes.set(name, { emoji, tag });
-    card.classList.add('selected');
+    syncCardState(name, true);
 
     // 选了火锅自动展开配菜清单
     if (isHotpotCard) {
