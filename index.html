@@ -273,6 +273,7 @@
   .cat-soup    { background: linear-gradient(135deg, #ffe8cc 0%, #ffd080 100%); }
   .cat-hotpot  { background: linear-gradient(135deg, #ffccc8 0%, #ff8080 100%); }
   .cat-night   { background: linear-gradient(135deg, #e8ccff 0%, #c080ff 100%); }
+  .cat-bbq     { background: linear-gradient(135deg, #ffe4b0 0%, #ff9a3c 100%); }
 
   .dish-info { padding: 10px 12px 14px; }
   .dish-name {
@@ -340,13 +341,14 @@
     gap: 8px;
   }
   .order-bar-btn:active { transform: scale(0.98); }
-  .random-btn .btn-dice { font-size: 22px; animation: wiggle 2.5s ease-in-out infinite; }
+  .random-btn .btn-dice { font-size: 22px; animation: wiggle 4s ease-in-out infinite; }
   @keyframes wiggle {
     0%,100% { transform: rotate(0deg); }
-    20% { transform: rotate(-12deg); }
-    40% { transform: rotate(12deg); }
-    60% { transform: rotate(-8deg); }
-    80% { transform: rotate(8deg); }
+    5%  { transform: rotate(-14deg); }
+    10% { transform: rotate(14deg); }
+    15% { transform: rotate(-10deg); }
+    20% { transform: rotate(10deg); }
+    25% { transform: rotate(0deg); }
   }
 
   /* ── Modal ── */
@@ -519,6 +521,7 @@
   .tag-soup    { background: #fff4e0; color: #a07820; }
   .tag-hotpot  { background: #ffe8e6; color: #c02020; }
   .tag-night   { background: #f0e8ff; color: #6030a0; }
+  .tag-bbq     { background: #fff0d8; color: #b05800; }
   .dish-card.visible { opacity: 1; transform: translateY(0); }
 
   /* ── 点菜选中效果 ── */
@@ -529,17 +532,10 @@
   .dish-card .selected-badge {
     display: none;
     position: absolute;
-    top: 8px; right: 8px;
-    background: #ecad40;
-    color: #fff;
-    font-size: 13px;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
+    top: 6px; right: 6px;
+    width: 28px; height: 28px;
     z-index: 10;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
   }
   .dish-card.selected .selected-badge { display: flex; }
 
@@ -1006,6 +1002,7 @@
     <button class="tab" data-cat="veggie"><span class="tab-icon">🥦</span><span class="tab-name">蔬菜</span></button>
     <button class="tab" data-cat="soup"><span class="tab-icon">🍲</span><span class="tab-name">炖汤</span></button>
     <button class="tab" data-cat="hotpot"><span class="tab-icon">🔥</span><span class="tab-name">火锅</span></button>
+    <button class="tab" data-cat="bbq"><span class="tab-icon">🍖</span><span class="tab-name">烤肉</span></button>
     <button class="tab" data-cat="night"><span class="tab-icon">🌙</span><span class="tab-name">宵夜</span></button>
   </div>
 </div>
@@ -1015,26 +1012,27 @@
     <div class="section-header"><span class="s-icon">👑</span><h2>招牌</h2><span class="s-count">10 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">鸡翅啫啫煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·九层塔·啫</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">盐焗鸡翅煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·盐焗·啫</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">小炒牛肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-beef">牛肉·小米辣·猛火炒</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">手抓羊肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-lamb">羊排·白萝卜</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">青瓜凉拌虾<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·青瓜·wasabi</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">虾仁豆腐煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·嫩豆腐·咸蛋黄</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🥕</div><div class="dish-info"><div class="dish-name">蔬菜汤<span class="tag-signature">招牌</span></div><span class="dish-tag tag-soup">白萝卜·娃娃菜·牛肉丸</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺<span class="tag-signature">招牌</span></div><span class="dish-tag tag-pork">猪肉·韭菜</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie">🧄</div><div class="dish-info"><div class="dish-name">蒜蓉菜心<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">菜心·蒜蓉</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie"></div><div class="dish-info"><div class="dish-name">蒜蓉小白菜<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">小白菜·蒜蓉</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">鸡翅啫啫煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·九层塔·啫</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">盐焗鸡翅煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·盐焗·啫</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">小炒牛肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-beef">牛肉·小米辣·猛火炒</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">手抓羊肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-lamb">羊排·白萝卜</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">青瓜凉拌虾<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·青瓜·wasabi</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">虾仁豆腐煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·嫩豆腐·咸蛋黄</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🥕</div><div class="dish-info"><div class="dish-name">蔬菜汤<span class="tag-signature">招牌</span></div><span class="dish-tag tag-soup">白萝卜·娃娃菜·牛肉丸</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-night">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺<span class="tag-signature">招牌</span></div><span class="dish-tag tag-pork">猪肉·韭菜</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie">🧄</div><div class="dish-info"><div class="dish-name">蒜蓉菜心<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">菜心·蒜蓉</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie"></div><div class="dish-info"><div class="dish-name">蒜蓉小白菜<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">小白菜·蒜蓉</span></div></div>
     </div>
   </section>
 
   <section class="section" id="sec-pork">
-    <div class="section-header"><span class="s-icon">🐖</span><h2>猪肉</h2><span class="s-count">3 道菜</span></div>
+    <div class="section-header"><span class="s-icon">🐖</span><h2>猪肉</h2><span class="s-count">4 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺<span class="tag-signature">招牌</span></div><span class="dish-tag tag-pork">猪肉·韭菜</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">青椒肉丝</div><span class="dish-tag tag-pork">猪肉·青椒</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">酿豆腐</div><span class="dish-tag tag-pork">猪肉·油豆腐</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-pork">🥟</div><div class="dish-info"><div class="dish-name">韭菜猪肉煎饺<span class="tag-signature">招牌</span></div><span class="dish-tag tag-pork">猪肉·韭菜</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">青椒肉丝</div><span class="dish-tag tag-pork">猪肉·青椒</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">酿豆腐</div><span class="dish-tag tag-pork">猪肉·油豆腐</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-pork"></div><div class="dish-info"><div class="dish-name">午餐肉紫菜炒饭</div><span class="dish-tag tag-pork">午餐肉粒·紫菜</span></div></div>
     </div>
   </section>
 
@@ -1042,9 +1040,9 @@
     <div class="section-header"><span class="s-icon">🐓</span><h2>鸡肉</h2><span class="s-count">3 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">鸡翅啫啫煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·九层塔·啫</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">盐焗鸡翅煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·盐焗·啫</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">蒜香鸡翅</div><span class="dish-tag tag-chicken">鸡肉·蒜蓉·煎</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">鸡翅啫啫煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·九层塔·啫</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">盐焗鸡翅煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-chicken">鸡肉·盐焗·啫</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-chicken"></div><div class="dish-info"><div class="dish-name">蒜香鸡翅</div><span class="dish-tag tag-chicken">鸡肉·蒜蓉·煎</span></div></div>
     </div>
   </section>
 
@@ -1052,15 +1050,15 @@
     <div class="section-header"><span class="s-icon">🐂</span><h2>牛肉</h2><span class="s-count">9 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">小炒牛肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-beef">牛肉·小米辣·猛火炒</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">双椒牛肉</div><span class="dish-tag tag-beef">牛肉·青红椒·猛火炒</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">咖喱肥牛</div><span class="dish-tag tag-beef">肥牛卷·土豆·辣咖喱</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">牛肉减脂餐</div><span class="dish-tag tag-beef">牛肉·生菜·紫菜·流心蛋</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">土豆牛肉粒</div><span class="dish-tag tag-beef">牛排肉·土豆·黑椒粒</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">胸口油吊龙煲</div><span class="dish-tag tag-beef">胸口油·吊龙·啫</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">黑椒牛扒</div><span class="dish-tag tag-beef">牛排肉·黑椒粒·海盐</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">牛肉海鲜芝士焗饭</div><span class="dish-tag tag-beef">牛肉·鱿鱼须·鲜虾·芝士</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">皮蛋牛肉粥</div><span class="dish-tag tag-beef">牛肉·皮蛋</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">小炒牛肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-beef">牛肉·小米辣·猛火炒</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">双椒牛肉</div><span class="dish-tag tag-beef">牛肉·青红椒·猛火炒</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">咖喱肥牛</div><span class="dish-tag tag-beef">肥牛卷·土豆·辣咖喱</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">牛肉减脂餐</div><span class="dish-tag tag-beef">牛肉·生菜·紫菜·流心蛋</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">土豆牛肉粒</div><span class="dish-tag tag-beef">牛排肉·土豆·黑椒粒</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">胸口油吊龙煲</div><span class="dish-tag tag-beef">胸口油·吊龙·啫</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">黑椒牛扒</div><span class="dish-tag tag-beef">牛排肉·黑椒粒·海盐</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">牛肉海鲜芝士焗饭</div><span class="dish-tag tag-beef">牛肉·鱿鱼须·鲜虾·芝士</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-beef"></div><div class="dish-info"><div class="dish-name">皮蛋牛肉粥</div><span class="dish-tag tag-beef">牛肉·皮蛋</span></div></div>
     </div>
   </section>
 
@@ -1068,9 +1066,9 @@
     <div class="section-header"><span class="s-icon">🐏</span><h2>羊肉</h2><span class="s-count">3 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">手抓羊肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-lamb">羊排·白萝卜</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">孜然羊肉</div><span class="dish-tag tag-lamb">羊肉粒·土豆·孜然</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">香煎羊排</div><span class="dish-tag tag-lamb">羊排·迷迭香</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">手抓羊肉<span class="tag-signature">招牌</span></div><span class="dish-tag tag-lamb">羊排·白萝卜</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">孜然羊肉</div><span class="dish-tag tag-lamb">羊肉粒·土豆·孜然</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-lamb"></div><div class="dish-info"><div class="dish-name">香煎羊排</div><span class="dish-tag tag-lamb">羊排·迷迭香</span></div></div>
     </div>
   </section>
 
@@ -1078,13 +1076,13 @@
     <div class="section-header"><span class="s-icon">🦐</span><h2>海鲜</h2><span class="s-count">7 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">青瓜凉拌虾<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·青瓜·wasabi</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">虾仁豆腐煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·嫩豆腐·咸蛋黄</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">白灼虾</div><span class="dish-tag tag-seafood">河虾·大头虾黑虎虾</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">辣炒花甲</div><span class="dish-tag tag-seafood">花甲·小米辣</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">清蒸鲈鱼</div><span class="dish-tag tag-seafood">鲈鱼秘制酱油</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">清蒸螃蟹/梭子蟹</div><span class="dish-tag tag-seafood">大闸蟹·梭子蟹</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">三葱爆鲈鱼</div><span class="dish-tag tag-seafood">鲈鱼·小葱·大葱·洋葱</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">青瓜凉拌虾<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·青瓜·wasabi</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">虾仁豆腐煲<span class="tag-signature">招牌</span></div><span class="dish-tag tag-seafood">河虾·黑虎虾·嫩豆腐·咸蛋黄</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">白灼虾</div><span class="dish-tag tag-seafood">河虾·大头虾黑虎虾</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">辣炒花甲</div><span class="dish-tag tag-seafood">花甲·小米辣</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">清蒸鲈鱼</div><span class="dish-tag tag-seafood">鲈鱼秘制酱油</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">清蒸螃蟹/梭子蟹</div><span class="dish-tag tag-seafood">大闸蟹·梭子蟹</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-seafood"></div><div class="dish-info"><div class="dish-name">三葱爆鲈鱼</div><span class="dish-tag tag-seafood">鲈鱼·小葱·大葱·洋葱</span></div></div>
     </div>
   </section>
 
@@ -1092,11 +1090,11 @@
     <div class="section-header"><span class="s-icon">🥦</span><h2>蔬菜</h2><span class="s-count">5 道菜</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie">🧄</div><div class="dish-info"><div class="dish-name">蒜蓉菜心<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">菜心·蒜蓉</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie"><img src="https://i.ibb.co/27W55m70/image.jpg" alt="蒜蓉小白菜" style="width:100%;height:100%;object-fit:cover;display:block;"></div><div class="dish-info"><div class="dish-name">蒜蓉小白菜<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">小白菜·蒜蓉</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie">🌶️</div><div class="dish-info"><div class="dish-name">青椒擂皮蛋</div><span class="dish-tag tag-veggie">青椒·皮蛋</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie"></div><div class="dish-info"><div class="dish-name">蒜蓉娃娃菜</div><span class="dish-tag tag-veggie">娃娃菜·蒜蓉</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-veggie">🫘</div><div class="dish-info"><div class="dish-name">娃娃菜焖豆腐泡</div><span class="dish-tag tag-veggie">娃娃菜·油豆腐·小米辣</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie">🧄</div><div class="dish-info"><div class="dish-name">蒜蓉菜心<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">菜心·蒜蓉</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie"><img src="https://i.ibb.co/27W55m70/image.jpg" alt="蒜蓉小白菜" style="width:100%;height:100%;object-fit:cover;display:block;"></div><div class="dish-info"><div class="dish-name">蒜蓉小白菜<span class="tag-signature">招牌</span></div><span class="dish-tag tag-veggie">小白菜·蒜蓉</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie">🌶️</div><div class="dish-info"><div class="dish-name">青椒擂皮蛋</div><span class="dish-tag tag-veggie">青椒·皮蛋</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie"></div><div class="dish-info"><div class="dish-name">蒜蓉娃娃菜</div><span class="dish-tag tag-veggie">娃娃菜·蒜蓉</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-veggie">🫘</div><div class="dish-info"><div class="dish-name">娃娃菜焖豆腐泡</div><span class="dish-tag tag-veggie">娃娃菜·油豆腐·小米辣</span></div></div>
     </div>
   </section>
 
@@ -1104,15 +1102,15 @@
     <div class="section-header"><span class="s-icon">🍲</span><h2>炖汤</h2><span class="s-count">9 道汤</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🥕</div><div class="dish-info"><div class="dish-name">蔬菜汤<span class="tag-signature">招牌</span></div><span class="dish-tag tag-soup">白萝卜·娃娃菜·牛肉丸</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🍅</div><div class="dish-info"><div class="dish-name">番茄鸡蛋汤</div><span class="dish-tag tag-soup">番茄·蛋花</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🌊</div><div class="dish-info"><div class="dish-name">花甲海带汤</div><span class="dish-tag tag-soup">花甲·海带</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🫙</div><div class="dish-info"><div class="dish-name">冬瓜牛肉丸虾米汤</div><span class="dish-tag tag-soup">冬瓜粒·牛肉丸·虾米</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🫙</div><div class="dish-info"><div class="dish-name">紫菜牛肉丸汤</div><span class="dish-tag tag-soup">紫菜·牛肉丸</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🐢</div><div class="dish-info"><div class="dish-name">甲鱼汤</div><span class="dish-tag tag-soup">甲鱼·虫草花</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🐚</div><div class="dish-info"><div class="dish-name">鲍鱼汤</div><span class="dish-tag tag-soup">鲍鱼·牛肉丸·白萝卜</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🫑</div><div class="dish-info"><div class="dish-name">苦瓜排骨黄豆汤</div><span class="dish-tag tag-soup">苦瓜·排骨·黄豆</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-soup">🐔</div><div class="dish-info"><div class="dish-name">乌鸡汤</div><span class="dish-tag tag-soup">乌鸡·虫草花</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🥕</div><div class="dish-info"><div class="dish-name">蔬菜汤<span class="tag-signature">招牌</span></div><span class="dish-tag tag-soup">白萝卜·娃娃菜·牛肉丸</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🍅</div><div class="dish-info"><div class="dish-name">番茄鸡蛋汤</div><span class="dish-tag tag-soup">番茄·蛋花</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🌊</div><div class="dish-info"><div class="dish-name">花甲海带汤</div><span class="dish-tag tag-soup">花甲·海带</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🫙</div><div class="dish-info"><div class="dish-name">冬瓜牛肉丸虾米汤</div><span class="dish-tag tag-soup">冬瓜粒·牛肉丸·虾米</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🫙</div><div class="dish-info"><div class="dish-name">紫菜牛肉丸汤</div><span class="dish-tag tag-soup">紫菜·牛肉丸</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🐢</div><div class="dish-info"><div class="dish-name">甲鱼汤</div><span class="dish-tag tag-soup">甲鱼·虫草花</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🐚</div><div class="dish-info"><div class="dish-name">鲍鱼汤</div><span class="dish-tag tag-soup">鲍鱼·牛肉丸·白萝卜</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🫑</div><div class="dish-info"><div class="dish-name">苦瓜排骨黄豆汤</div><span class="dish-tag tag-soup">苦瓜·排骨·黄豆</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-soup">🐔</div><div class="dish-info"><div class="dish-name">乌鸡汤</div><span class="dish-tag tag-soup">乌鸡·虫草花</span></div></div>
     </div>
   </section>
 
@@ -1120,10 +1118,10 @@
     <div class="section-header"><span class="s-icon">🔥</span><h2>火锅</h2><span class="s-count">4 种锅底</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🫙</div><div class="dish-info"><div class="dish-name">清汤锅底</div><span class="dish-tag tag-hotpot">火锅·清淡</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🌸</div><div class="dish-info"><div class="dish-name">花胶鸡锅底</div><span class="dish-tag tag-hotpot">火锅·滋补</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🌶️</div><div class="dish-info"><div class="dish-name">牛油锅底</div><span class="dish-tag tag-hotpot">火锅·麻辣</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-hotpot">🐖</div><div class="dish-info"><div class="dish-name">猪肚鸡锅底</div><span class="dish-tag tag-hotpot">火锅·特色</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-hotpot">🫙</div><div class="dish-info"><div class="dish-name">清汤锅底</div><span class="dish-tag tag-hotpot">火锅·清淡</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-hotpot">🌸</div><div class="dish-info"><div class="dish-name">花胶鸡锅底</div><span class="dish-tag tag-hotpot">火锅·滋补</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-hotpot">🌶️</div><div class="dish-info"><div class="dish-name">牛油锅底</div><span class="dish-tag tag-hotpot">火锅·麻辣</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-hotpot">🐖</div><div class="dish-info"><div class="dish-name">猪肚鸡锅底</div><span class="dish-tag tag-hotpot">火锅·特色</span></div></div>
     </div>
     <button class="hotpot-sides-btn" id="hotpotSidesBtn" disabled>🥢 配菜清单</button>
     <div class="hotpot-sides-panel" id="hotpotSidesPanel">
@@ -1132,15 +1130,28 @@
     </div>
   </section>
 
+  <section class="section" id="sec-bbq">
+    <div class="section-header"><span class="s-icon">🍖</span><h2>烤肉</h2><span class="s-count">1 道菜</span></div>
+    <div class="divider"></div>
+    <div class="dish-grid">
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-bbq">🍖</div><div class="dish-info"><div class="dish-name">烤肉</div><span class="dish-tag tag-bbq">烤肉·铁板</span></div></div>
+    </div>
+    <button class="hotpot-sides-btn" id="bbqSidesBtn" disabled>🥩 配菜清单</button>
+    <div class="hotpot-sides-panel" id="bbqSidesPanel">
+      <div class="hotpot-sides-title">选择烤肉配菜（可多选）</div>
+      <div class="hotpot-sides-grid" id="bbqSidesGrid"></div>
+    </div>
+  </section>
+
   <section class="section" id="sec-night">
     <div class="section-header"><span class="s-icon">🌙</span><h2>宵夜</h2><span class="s-count">5 道</span></div>
     <div class="divider"></div>
     <div class="dish-grid">
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🫓</div><div class="dish-info"><div class="dish-name">手抓饼</div><span class="dish-tag tag-night">宵夜·煎</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🥜</div><div class="dish-info"><div class="dish-name">花生汤圆</div><span class="dish-tag tag-night">宵夜·甜品</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🍜</div><div class="dish-info"><div class="dish-name">海鲜面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🌶️</div><div class="dish-info"><div class="dish-name">辣鸡面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
-      <div class="dish-card"><span class="selected-badge">✓</span><div class="dish-img cat-night">🦞</div><div class="dish-info"><div class="dish-name">小龙虾拌面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-night">🫓</div><div class="dish-info"><div class="dish-name">手抓饼</div><span class="dish-tag tag-night">宵夜·煎</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-night">🥜</div><div class="dish-info"><div class="dish-name">花生汤圆</div><span class="dish-tag tag-night">宵夜·甜品</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-night">🍜</div><div class="dish-info"><div class="dish-name">海鲜面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-night">🌶️</div><div class="dish-info"><div class="dish-name">辣鸡面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
+      <div class="dish-card"><span class="selected-badge"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><circle cx="512" cy="512" r="490" fill="#ecad40"/><path d="M771.66 391.85L481.12 682.38c-13.87 13.87-36.36 13.87-50.23 0L252.34 503.83c-13.87-13.87-13.87-36.36 0-50.23 13.87-13.87 36.36-13.87 50.23 0l153.44 153.44 265.42-265.42c13.87-13.87 36.36-13.87 50.23 0 13.87 13.87 13.87 36.36 0 50.23z" fill="#fff"/></svg></span><div class="dish-img cat-night">🦞</div><div class="dish-info"><div class="dish-name">小龙虾拌面</div><span class="dish-tag tag-night">宵夜·面食</span></div></div>
     </div>
   </section>
 </main>
@@ -1158,13 +1169,13 @@
   </div>
   <div class="bottom-bar">
     <button class="order-bar-btn" id="orderBar">
-      <span>🛒</span>
+      <img src="https://i.ibb.co/mrx6v3gQ/image.png" alt="" style="width:30px;height:30px;object-fit:contain;vertical-align:middle;">
       已点菜品
       <span class="order-bar-count" id="orderCount">0</span>
       <span class="order-bar-arrow" id="orderArrow">▲</span>
     </button>
     <button class="random-btn" id="randomBtn">
-      <span class="btn-dice">🎲</span>
+      <img src="https://i.ibb.co/nMYwMW8q/image.png" alt="" class="btn-dice" style="width:38px;height:38px;object-fit:contain;vertical-align:middle;">
       不知道吃什么？
     </button>
   </div>
@@ -1197,6 +1208,15 @@
         <button class="modal-btn primary" id="hotpotConfirmBtn">🍲 炫火锅咯！</button>
       </div>
     </div>
+
+    <!-- 烤肉配菜面板（隐藏） -->
+    <div id="modalBbqPanel" style="display:none;">
+      <div style="font-size:13px;color:var(--brown-mid);text-align:center;margin-bottom:14px;letter-spacing:0.5px;">选择今天的烤肉配菜吧～（可多选）</div>
+      <div class="hotpot-sides-grid" id="modalBbqSidesGrid" style="margin-bottom:16px;"></div>
+      <div class="modal-actions">
+        <button class="modal-btn primary" id="bbqConfirmBtn">🍖 开烤咯！</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1225,7 +1245,7 @@ function getCleanName(el) {
 
 const categories = {
   signature: { label: '招牌', icon: '👑', dishes: ['鸡翅啫啫煲','盐焗鸡翅煲','小炒牛肉','手抓羊肉','青瓜凉拌虾','虾仁豆腐煲','蔬菜汤','韭菜猪肉煎饺','蒜蓉菜心','蒜蓉小白菜'] },
-  pork:    { label: '猪肉', icon: '🐖', dishes: ['青椒肉丝','酿豆腐','韭菜猪肉煎饺'] },
+  pork:    { label: '猪肉', icon: '🐖', dishes: ['青椒肉丝','酿豆腐','韭菜猪肉煎饺','午餐肉紫菜炒饭'] },
   chicken: { label: '鸡肉', icon: '🐓', dishes: ['蒜香鸡翅','鸡翅啫啫煲','盐焗鸡翅煲'] },
   beef:    { label: '牛肉', icon: '🐂', dishes: ['小炒牛肉','双椒牛肉','咖喱肥牛','牛肉减脂餐','土豆牛肉粒','胸口油吊龙煲','黑椒牛扒','牛肉海鲜芝士焗饭','皮蛋牛肉粥'] },
   lamb:    { label: '羊肉', icon: '🐏', dishes: ['孜然羊肉','手抓羊肉','香煎羊排'] },
@@ -1233,12 +1253,13 @@ const categories = {
   veggie:  { label: '蔬菜', icon: '🥦', dishes: ['青椒擂皮蛋','蒜蓉菜心','蒜蓉娃娃菜','娃娃菜焖豆腐泡','蒜蓉小白菜'] },
   soup:    { label: '炖汤', icon: '🍲', dishes: ['番茄鸡蛋汤','花甲海带汤','蔬菜汤','冬瓜牛肉丸虾米汤','紫菜牛肉丸汤','甲鱼汤','鲍鱼汤','苦瓜排骨黄豆汤','乌鸡汤'] },
   hotpot:  { label: '火锅', icon: '🔥', dishes: ['清汤锅底','花胶鸡锅底','牛油锅底','猪肚鸡锅底'] },
-  night:   { label: '宵夜', icon: '🌙', dishes: ['手抓饼','花生汤圆','海鲜面','辣鸡面','小龙虾拌面'] }
+  night:   { label: '宵夜', icon: '🌙', dishes: ['手抓饼','花生汤圆','海鲜面','辣鸡面','小龙虾拌面'] },
+  bbq:     { label: '烤肉', icon: '🍖', dishes: ['烤肉'] }
 };
-const mainDishCats = ['pork','chicken','beef','lamb','seafood','veggie','hotpot'];
+const mainDishCats = ['pork','chicken','beef','lamb','seafood','veggie','hotpot','bbq'];
 // 可用于"随机加菜"的分类（排除炖汤、火锅、宵夜）
 const extraDishCats = ['pork','chicken','beef','lamb','seafood','veggie'];
-const comboEmojis = { pork:'🐖',chicken:'🐓',beef:'🐂',lamb:'🐏',seafood:'🦐',veggie:'🥦',hotpot:'🔥',night:'🌙',soup:'🍲' };
+const comboEmojis = { pork:'🐖',chicken:'🐓',beef:'🐂',lamb:'🐏',seafood:'🦐',veggie:'🥦',hotpot:'🔥',night:'🌙',soup:'🍲',bbq:'🍖' };
 
 function rand(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
@@ -1283,6 +1304,9 @@ function renderComboCard(item, idx, isLocked) {
   const signatureDishes = new Set(categories['signature']?.dishes || []);
   const signatureBadge = signatureDishes.has(item.name) ? '<span class="tag-signature">招牌</span>' : '';
 
+  // 火锅和烤肉分类不显示锁定按钮
+  const isHotpotOrBbq = item.cat === '火锅' || item.cat === '烤肉';
+
   card.innerHTML = `
     <div class="combo-emoji" style="${imgWrapStyle}">${imgHtml}</div>
     <div class="combo-info">
@@ -1291,23 +1315,25 @@ function renderComboCard(item, idx, isLocked) {
       <div class="combo-cat">${item.cat}</div>
       <div class="combo-lock-tip">🔒 已锁定</div>
     </div>
-    <button class="combo-lock-btn" title="${isLocked ? '解锁' : '锁定此菜'}">${isLocked ? '🔒' : '🔓'}</button>
+    ${isHotpotOrBbq ? '' : `<button class="combo-lock-btn" title="${isLocked ? '解锁' : '锁定此菜'}">${isLocked ? '🔒' : '🔓'}</button>`}
   `;
-  card.querySelector('.combo-lock-btn').addEventListener('click', () => {
-    const slotIdx = parseInt(card.dataset.slotIdx);
-    if (lockedSlots[slotIdx]) {
-      delete lockedSlots[slotIdx];
-      card.classList.remove('locked');
-      card.querySelector('.combo-lock-btn').textContent = '🔓';
-      card.querySelector('.combo-lock-btn').title = '锁定此菜';
-    } else {
-      lockedSlots[slotIdx] = item;
-      card.classList.add('locked');
-      card.querySelector('.combo-lock-btn').textContent = '🔒';
-      card.querySelector('.combo-lock-btn').title = '解锁';
-    }
-    rebuildCurrentComboNames();
-  });
+  if (!isHotpotOrBbq) {
+    card.querySelector('.combo-lock-btn').addEventListener('click', () => {
+      const slotIdx = parseInt(card.dataset.slotIdx);
+      if (lockedSlots[slotIdx]) {
+        delete lockedSlots[slotIdx];
+        card.classList.remove('locked');
+        card.querySelector('.combo-lock-btn').textContent = '🔓';
+        card.querySelector('.combo-lock-btn').title = '锁定此菜';
+      } else {
+        lockedSlots[slotIdx] = item;
+        card.classList.add('locked');
+        card.querySelector('.combo-lock-btn').textContent = '🔒';
+        card.querySelector('.combo-lock-btn').title = '解锁';
+      }
+      rebuildCurrentComboNames();
+    });
+  }
   return card;
 }
 
@@ -1330,13 +1356,19 @@ function renderCombo() {
   const cat1Key = cats.splice(Math.floor(Math.random()*cats.length),1)[0];
   const cat2Key = rand(cats);
 
-  // 判断是否抽中火锅
+  // 判断是否抽中火锅或烤肉
   const isHotpot = cat1Key === 'hotpot' || cat2Key === 'hotpot';
+  const isBbq = cat1Key === 'bbq' || cat2Key === 'bbq';
   const hotpotDish = randExcluding(categories['hotpot'].dishes, lockedNames);
+  const bbqDish = randExcluding(categories['bbq'].dishes, lockedNames);
   const none = { label:'', name:'无', cat:'', emoji:'🚫' };
 
   const baseCombo = isHotpot ? [
     { label:'锅底', name: hotpotDish, cat:'火锅', emoji:'🔥' },
+    { ...none, label:'第二道菜' },
+    { ...none, label:'第三道菜' }
+  ] : isBbq ? [
+    { label:'烤肉', name: bbqDish, cat:'烤肉', emoji:'🍖' },
     { ...none, label:'第二道菜' },
     { ...none, label:'第三道菜' }
   ] : [
@@ -1472,6 +1504,7 @@ function addNightDish() {
 
 const dishImgMap = {
   '酿豆腐': {type:'img', src:'https://i.ibb.co/4gSSxgzn/image.jpg', cat:'cat-pork'},
+  '午餐肉紫菜炒饭': {type:'img', src:'https://i.ibb.co/v46cXM9X/image.jpg', cat:'cat-pork'},
   '青椒肉丝': {type:'img', src:'https://i.ibb.co/0ymnKV5F/image.jpg', cat:'cat-pork'},
   '蒜香鸡翅': {type:'img', src:'https://i.ibb.co/ychsLQM1/image.jpg', cat:'cat-chicken'},
   '鸡翅啫啫煲': {type:'img', src:'https://i.ibb.co/HTtHNxjz/image.jpg', cat:'cat-chicken'},
@@ -1531,6 +1564,23 @@ const dishImgMap = {
   '油豆腐':     {type:'img', src:'https://i.ibb.co/7Ngy01nR/image.jpg', cat:'cat-hotpot'},
   '鱼蛋':       {type:'img', src:'https://i.ibb.co/yc4zqKB0/image.jpg', cat:'cat-hotpot'},
   '芝士丸':     {type:'img', src:'https://i.ibb.co/93sbvqZ0/image.jpg', cat:'cat-hotpot'},
+  '烤肉':       {type:'img', src:'https://i.ibb.co/mVbKPY0d/image.jpg', cat:'cat-bbq'},
+  // 烤肉配菜
+  '韩国泡菜':   {type:'img', src:'https://i.ibb.co/DmZBJVZ/image.jpg', cat:'cat-bbq'},
+  '辣味蘸粉':   {type:'img', src:'https://i.ibb.co/KjSQywGJ/image.jpg', cat:'cat-bbq'},
+  '牛排肉':     {type:'img', src:'https://i.ibb.co/TMPXdjdX/image.jpg', cat:'cat-bbq'},
+  '牛上脑':     {type:'img', src:'https://i.ibb.co/d0kJCGJ8/image.jpg', cat:'cat-bbq'},
+  '牛五花肉':   {type:'img', src:'https://i.ibb.co/jZDF16Pw/image.jpg', cat:'cat-bbq'},
+  '培根':       {type:'img', src:'https://i.ibb.co/0yK4VDm3/image.jpg', cat:'cat-bbq'},
+  '生菜':       {type:'img', src:'https://i.ibb.co/HLpY7FJg/image.jpg', cat:'cat-bbq'},
+  '午餐肉':     {type:'img', src:'https://i.ibb.co/WWz2N9vF/image.jpg', cat:'cat-bbq'},
+  '鲜肥牛':     {type:'img', src:'https://i.ibb.co/BVSnKqMr/image.jpg', cat:'cat-bbq'},
+  '胸口油':     {type:'img', src:'https://i.ibb.co/LzjwL0yj/image.jpg', cat:'cat-bbq'},
+  '腌制鸡翅':   {type:'img', src:'https://i.ibb.co/hxBT8cts/image.jpg', cat:'cat-bbq'},
+  '鱿鱼须':     {type:'img', src:'https://i.ibb.co/svShMvKx/image.jpg', cat:'cat-bbq'},
+  '原味蘸粉':   {type:'img', src:'https://i.ibb.co/PZwrWYCV/image.jpg', cat:'cat-bbq'},
+  '猪颈肉':     {type:'img', src:'https://i.ibb.co/BpGj1jc/image.jpg', cat:'cat-bbq'},
+  '猪五花肉':   {type:'img', src:'https://i.ibb.co/7xgdXysS/image.jpg', cat:'cat-bbq'},
 };
 
 // ── 注入菜品图片 ──
@@ -1565,6 +1615,7 @@ document.getElementById('tabs').addEventListener('click', e => {
 document.getElementById('reshuffleBtn').addEventListener('click', () => {
   document.getElementById('modalMainPanel').style.display = 'block';
   document.getElementById('modalHotpotPanel').style.display = 'none';
+  document.getElementById('modalBbqPanel').style.display = 'none';
   document.getElementById('modalTitle').textContent = '今日推荐搭配 ✨';
   document.getElementById('modalSub').textContent = '随机为你搭配 2菜 + 1汤 · 点击 🔓 可锁定喜欢的';
   renderCombo();
@@ -1643,8 +1694,58 @@ document.getElementById('closeBtn').addEventListener('click', () => {
       grid.appendChild(el);
     });
 
+  } else if (comboNames.find(n => categories['bbq'].dishes.includes(n))) {
+    const bbqName = comboNames.find(n => categories['bbq'].dishes.includes(n));
+
+    // 写入烤肉到 selectedDishes，高亮卡片
+    document.querySelectorAll('#sec-bbq .dish-card.selected').forEach(c => {
+      const n = c.querySelector('.dish-name')?.textContent?.trim();
+      if (n) selectedDishes.delete(n);
+      c.classList.remove('selected');
+    });
+    selectedDishes.set(bbqName, { emoji: '🍖', tag: '烤肉·铁板' });
+    document.querySelectorAll('#sec-bbq .dish-card').forEach(c => {
+      if (c.querySelector('.dish-name')?.textContent?.trim() === bbqName)
+        c.classList.add('selected');
+    });
+
+    // 切换到烤肉配菜面板
+    document.getElementById('modalMainPanel').style.display = 'none';
+    document.getElementById('modalBbqPanel').style.display = 'block';
+    document.getElementById('modalTitle').textContent = '🍖 选择烤肉配菜';
+    document.getElementById('modalSub').textContent = '';
+
+    // 渲染烤肉配菜格子，同步已选状态
+    const bbqGrid = document.getElementById('modalBbqSidesGrid');
+    bbqGrid.innerHTML = '';
+    bbqSides.forEach(side => {
+      const el = document.createElement('div');
+      el.className = 'hotpot-side-item';
+      const imgInfo3 = dishImgMap[side];
+      const mediaHtml3 = (imgInfo3 && imgInfo3.type === 'img')
+        ? `<img class="side-img" src="${imgInfo3.src}" alt="${side}">`
+        : `<div class="side-emoji">🥩</div>`;
+      el.innerHTML = mediaHtml3 + `<span class="side-name">${side}</span>`;
+      if (selectedBbqSides.has(side)) el.classList.add('selected');
+      el.addEventListener('click', () => {
+        el.classList.toggle('selected');
+        const mainEl = [...document.querySelectorAll('#bbqSidesGrid .hotpot-side-item')]
+          .find(e => e.querySelector('.side-name')?.textContent === side);
+        if (el.classList.contains('selected')) {
+          selectedBbqSides.add(side);
+          selectedDishes.set(side, { emoji: '🥩', tag: '烤肉·配菜' });
+          if (mainEl) mainEl.classList.add('selected');
+        } else {
+          selectedBbqSides.delete(side);
+          selectedDishes.delete(side);
+          if (mainEl) mainEl.classList.remove('selected');
+        }
+      });
+      bbqGrid.appendChild(el);
+    });
+
   } else {
-    // 非火锅：写入所有随机推荐菜，再展示菜单
+    // 非火锅/烤肉：写入所有随机推荐菜，再展示菜单
     comboNames.forEach(name => {
       if (!name || name === '无') return;
       for (const [catKey, cat] of Object.entries(categories)) {
@@ -1670,6 +1771,35 @@ document.getElementById('closeBtn').addEventListener('click', () => {
     bottom.classList.add('open');
     document.getElementById('orderBackdrop').classList.add('open');
   }
+});
+
+document.getElementById('bbqConfirmBtn').addEventListener('click', () => {
+  // 重置 modal 状态
+  document.getElementById('modalMainPanel').style.display = 'block';
+  document.getElementById('modalBbqPanel').style.display = 'none';
+  document.getElementById('modalTitle').textContent = '今日推荐搭配 ✨';
+  document.getElementById('modalSub').textContent = '随机为你搭配 2菜 + 1汤 · 点击 🔓 可锁定喜欢的';
+  document.getElementById('modal').classList.remove('open');
+
+  // 同步主页面烤肉配菜面板状态
+  const bbqBtn = document.getElementById('bbqSidesBtn');
+  const bbqPanel = document.getElementById('bbqSidesPanel');
+  bbqBtn.disabled = false;
+  if (selectedBbqSides.size > 0) {
+    bbqPanel.classList.add('open');
+    bbqBtn.textContent = '🥩 收起配菜';
+  }
+
+  renderOrderList();
+
+  // 展开已点抽屉
+  const panel = document.getElementById('orderPanel');
+  const bar = document.getElementById('orderBar');
+  const bottom = document.getElementById('orderBottom');
+  panel.classList.add('open');
+  bar.classList.add('open');
+  bottom.classList.add('open');
+  document.getElementById('orderBackdrop').classList.add('open');
 });
 
 document.getElementById('hotpotConfirmBtn').addEventListener('click', () => {
@@ -1742,7 +1872,7 @@ function renderOrderList() {
   const list = document.getElementById('orderList');
   const count = document.getElementById('orderCount');
   const bottom = document.getElementById('orderBottom');
-  const mainCount = [...selectedDishes.keys()].filter(n => !selectedSides.has(n)).length;
+  const mainCount = [...selectedDishes.keys()].filter(n => !selectedSides.has(n) && !selectedBbqSides.has(n)).length;
   count.textContent = mainCount;
 
   if (selectedDishes.size === 0) {
@@ -1769,10 +1899,12 @@ function renderOrderList() {
 
   list.innerHTML = '';
 
-  // 分离锅底、配菜、普通菜
+  // 分离锅底、火锅配菜、烤肉主菜、烤肉配菜、普通菜
   const hotpotMain = [...selectedDishes.entries()].filter(([n, info]) => info.tag.includes('火锅') && !selectedSides.has(n));
-  const sides = [...selectedSides].filter(n => selectedDishes.has(n));
-  const normal = [...selectedDishes.entries()].filter(([n, info]) => !info.tag.includes('火锅') && !selectedSides.has(n));
+  const hotpotSidesList = [...selectedDishes.entries()].filter(([n]) => selectedSides.has(n));
+  const bbqMainList = [...selectedDishes.entries()].filter(([n, info]) => info.tag.includes('烤肉') && !selectedBbqSides.has(n));
+  const bbqSidesList = [...selectedDishes.entries()].filter(([n]) => selectedBbqSides.has(n));
+  const normal = [...selectedDishes.entries()].filter(([n, info]) => !info.tag.includes('火锅') && !info.tag.includes('烤肉') && !selectedSides.has(n) && !selectedBbqSides.has(n));
 
   const signatureSet = new Set(categories['signature']?.dishes || []);
 
@@ -1799,17 +1931,16 @@ function renderOrderList() {
     list.appendChild(div);
   });
 
-  // 渲染火锅锅底（一级）+ 配菜（二级）
-  if (hotpotMain.length > 0 || sides.length > 0) {
+  // 渲染火锅锅底（一级）+ 火锅配菜（二级）
+  if (hotpotMain.length > 0 || hotpotSidesList.length > 0) {
     const hotpotDiv = document.createElement('div');
     hotpotDiv.className = 'order-item';
     const mainName = hotpotMain.length > 0 ? hotpotMain[0][0] : '';
     const mainInfo = hotpotMain.length > 0 ? hotpotMain[0][1] : { emoji: '🔥', tag: '火锅' };
 
-    // 配菜二级列表 HTML
-    const subHtml = sides.length > 0 ? `
+    const subHtml = hotpotSidesList.length > 0 ? `
       <div class="order-sub-list">
-        ${sides.map(s => `
+        ${hotpotSidesList.map(([s]) => `
           <div class="order-sub-item">
             <span class="order-sub-name">· ${s}</span>
             <button class="order-sub-del" data-side="${s}" title="删除">✕</button>
@@ -1827,6 +1958,35 @@ function renderOrderList() {
       ${mainName ? `<button class="order-item-del" data-name="${mainName}" title="删除">✕</button>` : ''}
     `;
     list.appendChild(hotpotDiv);
+  }
+
+  // 渲染烤肉（一级）+ 烤肉配菜（二级）
+  if (bbqMainList.length > 0 || bbqSidesList.length > 0) {
+    const bbqDiv = document.createElement('div');
+    bbqDiv.className = 'order-item';
+    const bbqName = bbqMainList.length > 0 ? bbqMainList[0][0] : '';
+    const bbqInfo = bbqMainList.length > 0 ? bbqMainList[0][1] : { emoji: '🍖', tag: '烤肉·铁板' };
+
+    const bbqSubHtml = bbqSidesList.length > 0 ? `
+      <div class="order-sub-list">
+        ${bbqSidesList.map(([s]) => `
+          <div class="order-sub-item">
+            <span class="order-sub-name">· ${s}</span>
+            <button class="order-sub-del" data-side="${s}" title="删除">✕</button>
+          </div>
+        `).join('')}
+      </div>` : '';
+
+    bbqDiv.innerHTML = `
+      <span class="order-item-emoji">${bbqInfo.emoji}</span>
+      <div style="flex:1;">
+        <div class="order-item-name">${bbqName || '烤肉'}</div>
+        <div class="order-item-tag">${bbqInfo.tag}</div>
+        ${bbqSubHtml}
+      </div>
+      ${bbqName ? `<button class="order-item-del" data-name="${bbqName}" title="删除">✕</button>` : ''}
+    `;
+    list.appendChild(bbqDiv);
   }
 
   // 删除事件：普通菜 & 锅底
@@ -1855,6 +2015,13 @@ function renderOrderList() {
         document.getElementById('hotpotSidesBtn').disabled = true;
         document.getElementById('hotpotSidesPanel').classList.remove('open');
         document.getElementById('hotpotSidesBtn').textContent = '🥢 配菜清单';
+        // 同步清空烤肉配菜
+        selectedBbqSides.forEach(side => selectedDishes.delete(side));
+        selectedBbqSides.clear();
+        document.getElementById('bbqSidesBtn').disabled = true;
+        document.getElementById('bbqSidesPanel').classList.remove('open');
+        document.getElementById('bbqSidesBtn').textContent = '🥩 配菜清单';
+        document.querySelectorAll('#bbqSidesGrid .hotpot-side-item').forEach(el => el.classList.remove('selected'));
       }
       renderOrderList();
     });
@@ -1865,7 +2032,8 @@ function renderOrderList() {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       const side = btn.dataset.side;
-      selectedSides.delete(side);
+      if (selectedSides.has(side)) selectedSides.delete(side);
+      if (selectedBbqSides.has(side)) selectedBbqSides.delete(side);
       selectedDishes.delete(side);
       document.querySelectorAll('.hotpot-side-item').forEach(el => {
         if (el.textContent === side) el.classList.remove('selected');
@@ -1915,6 +2083,7 @@ document.getElementById('main').addEventListener('click', e => {
   if (!name) return;
 
   const isHotpotCard = card.querySelector('.dish-img')?.classList.contains('cat-hotpot');
+  const isBbqCard = card.querySelector('.dish-img')?.classList.contains('cat-bbq');
 
   // 同步所有同名卡片的选中状态（招牌区与分类区共享同一道菜）
   function syncCardState(dishName, selected) {
@@ -1935,10 +2104,23 @@ document.getElementById('main').addEventListener('click', e => {
       document.getElementById('hotpotSidesPanel').classList.remove('open');
       document.getElementById('hotpotSidesBtn').textContent = '🥢 配菜清单';
     }
+    // 取消烤肉时禁用配菜按钮并收起
+    if (isBbqCard) {
+      document.getElementById('bbqSidesBtn').disabled = true;
+      document.getElementById('bbqSidesPanel').classList.remove('open');
+      document.getElementById('bbqSidesBtn').textContent = '🥩 配菜清单';
+    }
   } else {
     // 如果是火锅，先取消已选的其他火锅
     if (isHotpotCard) {
       document.querySelectorAll('#sec-hotpot .dish-card.selected').forEach(c => {
+        const n = c.querySelector('.dish-name')?.textContent?.trim();
+        if (n) { selectedDishes.delete(n); syncCardState(n, false); }
+      });
+    }
+    // 如果是烤肉，先取消已选的其他烤肉
+    if (isBbqCard) {
+      document.querySelectorAll('#sec-bbq .dish-card.selected').forEach(c => {
         const n = c.querySelector('.dish-name')?.textContent?.trim();
         if (n) { selectedDishes.delete(n); syncCardState(n, false); }
       });
@@ -1960,6 +2142,19 @@ document.getElementById('main').addEventListener('click', e => {
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
+    // 选了烤肉自动展开配菜清单
+    if (isBbqCard) {
+      document.getElementById('bbqSidesBtn').disabled = false;
+      const panel = document.getElementById('bbqSidesPanel');
+      const btn = document.getElementById('bbqSidesBtn');
+      if (!panel.classList.contains('open')) {
+        panel.classList.add('open');
+        btn.textContent = '🥩 收起配菜';
+      }
+      setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
   }
   renderOrderList();
 });
@@ -1975,7 +2170,7 @@ function revealCards() {
 setTimeout(revealCards, 100);
 
 // ── 火锅配菜 ──
-const hotpotSides = ['牛肉丸','芝士丸','鱼蛋','墨鱼丸','肥牛卷','肥羊卷','脆皮鸡','蟹柳','油豆腐','小白菜','豆芽','波纹面'];
+const hotpotSides = ['肥牛卷','牛肉丸','胸口油','午餐肉','肥羊卷','脆皮鸡','蟹柳','鱿鱼须','鱼蛋','墨鱼丸','芝士丸','油豆腐','小白菜','豆芽','生菜','波纹面'];
 const selectedSides = new Set();
 
 // 渲染配菜格子
@@ -2003,6 +2198,41 @@ hotpotSides.forEach(side => {
   sidesGrid.appendChild(el);
 });
 
+// ── 烤肉配菜 ──
+const bbqSides = ['牛排肉','牛上脑','牛五花肉','鲜肥牛','胸口油','猪颈肉','猪五花肉','培根','午餐肉','腌制鸡翅','鱿鱼须','生菜','韩国泡菜','原味蘸粉','辣味蘸粉'];
+const selectedBbqSides = new Set();
+
+const bbqSidesGrid = document.getElementById('bbqSidesGrid');
+bbqSides.forEach(side => {
+  const el = document.createElement('div');
+  el.className = 'hotpot-side-item';
+  const imgInfo = dishImgMap[side];
+  const mediaHtml = (imgInfo && imgInfo.type === 'img')
+    ? `<img class="side-img" src="${imgInfo.src}" alt="${side}">`
+    : `<div class="side-emoji">🥩</div>`;
+  el.innerHTML = mediaHtml + `<span class="side-name">${side}</span>`;
+  el.addEventListener('click', () => {
+    if (selectedBbqSides.has(side)) {
+      selectedBbqSides.delete(side);
+      el.classList.remove('selected');
+      selectedDishes.delete(side);
+    } else {
+      selectedBbqSides.add(side);
+      el.classList.add('selected');
+      selectedDishes.set(side, { emoji: '🥩', tag: '烤肉·配菜' });
+    }
+    renderOrderList();
+  });
+  bbqSidesGrid.appendChild(el);
+});
+
+document.getElementById('bbqSidesBtn').addEventListener('click', () => {
+  const panel = document.getElementById('bbqSidesPanel');
+  const btn = document.getElementById('bbqSidesBtn');
+  const isOpen = panel.classList.toggle('open');
+  btn.textContent = isOpen ? '🥩 收起配菜' : '🥩 配菜清单';
+});
+
 // 配菜按钮展开/收起
 document.getElementById('hotpotSidesBtn').addEventListener('click', () => {
   const panel = document.getElementById('hotpotSidesPanel');
@@ -2020,6 +2250,7 @@ function getCatClass(tag) {
   if (tag.includes('蔬菜')) return 'cat-veggie';
   if (tag.includes('汤')) return 'cat-soup';
   if (tag.includes('火锅')) return 'cat-hotpot';
+  if (tag.includes('烤肉')) return 'cat-bbq';
   if (tag.includes('宵夜')) return 'cat-night';
   return '';
 }
@@ -2035,9 +2266,11 @@ function showMenuCard() {
   const signatureNames = new Set(categories['signature']?.dishes || []);
 
   // 排序：锅底第一，配菜紧随，招牌菜优先，其余菜品最后
+  const bbqDishNames = new Set(categories['bbq'].dishes);
   const hotpotMain = allEntries.filter(([n]) => hotpotDishNames.has(n));
-  const sides       = allEntries.filter(([n]) => selectedSides.has(n));
-  const others      = allEntries.filter(([n]) => !hotpotDishNames.has(n) && !selectedSides.has(n));
+  const bbqMain    = allEntries.filter(([n]) => bbqDishNames.has(n));
+  const sides      = allEntries.filter(([n]) => selectedSides.has(n) || selectedBbqSides.has(n));
+  const others     = allEntries.filter(([n]) => !hotpotDishNames.has(n) && !bbqDishNames.has(n) && !selectedSides.has(n) && !selectedBbqSides.has(n));
 
   // 非火锅时，招牌菜排前面
   const othersSorted = [...others].sort(([a], [b]) => {
@@ -2046,7 +2279,9 @@ function showMenuCard() {
 
   const entries = hotpotMain.length > 0
     ? [...hotpotMain, ...sides, ...othersSorted]
-    : othersSorted;
+    : bbqMain.length > 0
+      ? [...bbqMain, ...sides, ...othersSorted]
+      : othersSorted;
 
   document.getElementById('imgPreviewTitle').textContent = '今日菜单';
   document.getElementById('imgPreviewDate').textContent = dateStr;
@@ -2110,6 +2345,7 @@ document.getElementById('orderResetBtn').addEventListener('click', () => {
   document.querySelectorAll('.dish-card.selected').forEach(c => c.classList.remove('selected'));
   // 清除火锅配菜选中状态
   document.querySelectorAll('.hotpot-side-item.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('#bbqSidesGrid .hotpot-side-item.selected').forEach(el => el.classList.remove('selected'));
   // 清空数据
   selectedDishes.clear();
   selectedSides.clear();
