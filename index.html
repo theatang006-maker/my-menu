@@ -2062,7 +2062,7 @@ function showMenuCard() {
       ${entries.map(([name, info]) => {
         const imgInfo = dishImgMap[name];
         const imgEl = (imgInfo && imgInfo.type === 'img')
-          ? `<img src="${imgInfo.src}" alt="${name}" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;">`
+          ? `<img src="${imgInfo.src}" alt="${name}" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;" crossorigin="anonymous">`
           : `<div style="width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:28px;background:#f5ece0;">${info.emoji}</div>`;
         const sigBadge = signatureNames.has(name)
           ? `<div style="text-align:center;margin-top:3px;"><span style="display:inline-block;padding:1px 6px;font-size:9px;background:#942f14;color:#fff;border-radius:20px;font-weight:700;letter-spacing:0.5px;">招牌</span></div>`
@@ -2125,69 +2125,44 @@ document.getElementById('imgPreviewOverlay').addEventListener('click', e => {
   }
 });
 
-document.getElementById('imgPreviewSaveBtn').addEventListener('click', async () => {
+document.getElementById('imgPreviewSaveBtn').addEventListener('click', () => {
   const btn = document.getElementById('imgPreviewSaveBtn');
   btn.textContent = '生成中...';
   btn.disabled = true;
 
   const card = document.getElementById('imgPreviewCard');
-
-  // 将卡片内所有外链图片预先转成 base64 data URL，绕开 html2canvas 的跨域限制
-  async function toDataURL(src) {
-    try {
-      const res = await fetch(src, { mode: 'cors' });
-      const blob = await res.blob();
-      return await new Promise(resolve => {
-        const r = new FileReader();
-        r.onload = () => resolve(r.result);
-        r.readAsDataURL(blob);
-      });
-    } catch {
-      return null; // 失败时保留原 src，降级处理
-    }
-  }
-
-  const imgs = [...card.querySelectorAll('img')];
-  const origSrcs = imgs.map(img => img.src);
-  // 并发转换所有图片
-  const dataSrcs = await Promise.all(origSrcs.map(src => toDataURL(src)));
-  imgs.forEach((img, i) => {
-    if (dataSrcs[i]) {
-      img.src = dataSrcs[i];
-    } else {
-      // fetch 失败：用纯色背景 + emoji 占位，确保截图不会崩溃
-      const w = img.naturalWidth || 80;
-      const h = img.naturalHeight || 80;
-      const fb = document.createElement('div');
-      fb.style.cssText = `width:${w}px;height:${h}px;display:flex;align-items:center;justify-content:center;font-size:28px;background:#f5ece0;`;
-      fb.textContent = '🍽️';
-      img.replaceWith(fb);
-    }
-  });
-
   const origRadius = card.style.borderRadius;
-  card.style.borderRadius = '0';
 
-  html2canvas(card, {
-    scale: 3,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: '#942f14',
-    logging: false
-  }).then(canvas => {
-    card.style.borderRadius = origRadius;
-    const imgUrl = canvas.toDataURL('image/jpeg', 0.95);
-    document.getElementById('imgPreviewCard').innerHTML =
-      `<img src="${imgUrl}" style="width:100%;display:block;border-radius:0;" alt="番茄私厨菜单">`;
-    document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄吧~';
-    btn.style.display = 'none';
-  }).catch(err => {
-    // 还原图片 src
-    imgs.forEach((img, i) => { img.src = origSrcs[i]; });
-    card.style.borderRadius = origRadius;
-    btn.textContent = '生成失败，请重试';
-    btn.disabled = false;
-    console.error('html2canvas error:', err);
+  // 等待卡片内所有图片加载完毕再截图
+  const allImgs = [...card.querySelectorAll('img')];
+  const waitImgs = allImgs.map(img => new Promise(resolve => {
+    if (img.complete && img.naturalWidth > 0) { resolve(); return; }
+    img.onload = resolve;
+    img.onerror = resolve; // 加载失败也继续，不阻塞
+  }));
+
+  Promise.all(waitImgs).then(() => {
+    card.style.borderRadius = '0';
+    html2canvas(card, {
+      scale: 3,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#942f14',
+      logging: false,
+      imageTimeout: 15000
+    }).then(canvas => {
+      card.style.borderRadius = origRadius;
+      const imgUrl = canvas.toDataURL('image/jpeg', 0.95);
+      document.getElementById('imgPreviewCard').innerHTML =
+        `<img src="${imgUrl}" style="width:100%;display:block;border-radius:0;" alt="番茄私厨菜单">`;
+      document.querySelector('.img-preview-hint').textContent = '👆 长按图片发送给番茄吧~';
+      btn.style.display = 'none';
+    }).catch(err => {
+      card.style.borderRadius = origRadius;
+      btn.textContent = '生成失败，请重试';
+      btn.disabled = false;
+      console.error('html2canvas error:', err);
+    });
   });
 });
 
