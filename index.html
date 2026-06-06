@@ -1622,7 +1622,7 @@ document.getElementById('closeBtn').addEventListener('click', () => {
       el.className = 'hotpot-side-item';
       const imgInfo2 = dishImgMap[side];
       const mediaHtml2 = (imgInfo2 && imgInfo2.type === 'img')
-        ? `<img class="side-img" src="${imgInfo2.src}" alt="${side}" loading="lazy">`
+        ? `<img class="side-img" src="${imgInfo2.src}" alt="${side}">`
         : `<div class="side-emoji">🍲</div>`;
       el.innerHTML = mediaHtml2 + `<span class="side-name">${side}</span>`;
       if (selectedSides.has(side)) el.classList.add('selected');
@@ -1985,7 +1985,7 @@ hotpotSides.forEach(side => {
   el.className = 'hotpot-side-item';
   const imgInfo = dishImgMap[side];
   const mediaHtml = (imgInfo && imgInfo.type === 'img')
-    ? `<img class="side-img" src="${imgInfo.src}" alt="${side}" loading="lazy">`
+    ? `<img class="side-img" src="${imgInfo.src}" alt="${side}">`
     : `<div class="side-emoji">🍲</div>`;
   el.innerHTML = mediaHtml + `<span class="side-name">${side}</span>`;
   el.addEventListener('click', () => {
@@ -2075,6 +2075,30 @@ function showMenuCard() {
   `;
 
   document.getElementById('imgPreviewOverlay').classList.add('open');
+
+  // 等弹窗内所有图片加载完毕，再启用"生成菜单"按钮
+  const saveBtn = document.getElementById('imgPreviewSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = '图片加载中…';
+  const previewImgs = [...document.querySelectorAll('#imgPreviewCard img')];
+  if (previewImgs.length === 0) {
+    saveBtn.disabled = false;
+    saveBtn.textContent = '生成菜单';
+  } else {
+    let loaded = 0;
+    const onDone = () => {
+      loaded++;
+      if (loaded >= previewImgs.length) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = '生成菜单';
+      }
+    };
+    previewImgs.forEach(img => {
+      if (img.complete && img.naturalWidth > 0) { onDone(); return; }
+      img.onload = onDone;
+      img.onerror = onDone; // 加载失败也解锁，不卡死
+    });
+  }
 }
 
 document.getElementById('orderSubmitBtn').addEventListener('click', showMenuCard);
