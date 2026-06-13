@@ -519,7 +519,7 @@
   .combo-card.locked .combo-lock-btn {
     border-color: #ecad40;
     background: #ecad40;
-    box-shadow: 0 2px 8px rgba(236,173,64,0.35);
+    box-shadow: 0 0 0 5px rgba(236,173,64,0.25), 0 2px 8px rgba(236,173,64,0.35);
     transform: scale(1.08);
   }
   .combo-lock-tip { display: none !important; }
@@ -749,7 +749,8 @@
   .order-bottom.open { display: flex; gap: 10px; align-items: center; }
   .order-submit-btn {
     flex: 1;
-    padding: 14px;
+    height: 52px;
+    padding: 0 14px;
     background: linear-gradient(135deg, #c0392b 0%, #8b1a10 100%);
     color: #fff;
     border: none;
@@ -2229,9 +2230,7 @@ function renderOrderList() {
         if (cn === name) c.classList.remove('selected');
       });
       // 如果删的是锅底，清空所有配菜
-      const wasHotpot = [...selectedSides].some(s => selectedDishes.has(s) || true);
-      if (name && document.querySelector(`#sec-hotpot .dish-card .dish-name`) &&
-          [...document.querySelectorAll('#sec-hotpot .dish-card .dish-name')].some(el => el.textContent === name)) {
+      if (name && categories['hotpot'].dishes.includes(name)) {
         // 删除所有配菜
         selectedSides.forEach(side => {
           selectedDishes.delete(side);
